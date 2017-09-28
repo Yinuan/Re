@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/act_bg"
+    android:orientation="vertical" >
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:layout_height="match_parent">
+
+		<View
+			android:id="@+id/top_menu_view_1"
+			android:layout_width="match_parent"
+			android:layout_height="20dp"
+			android:background="#12aaf6"></View>
+    <RelativeLayout
+		android:id="@+id/layout_navbar"
+		style="@style/navbar" >
+        <TextView
+			style="@style/title"
+			android:id="@+id/register_login"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="14dp"
+			android:text="@string/login" />
+        <ImageView
+            android:id="@+id/image_back"
+            android:layout_width="wrap_content"
+         	android:layout_height="match_parent"
+         	android:layout_alignParentLeft="true"
+         	android:paddingLeft="15dp"
+         	android:paddingRight="15dp"
+         	android:layout_centerVertical="true"
+			android:visibility="gone"
+         	android:src="@drawable/login_return_button_selected"/>
+    </RelativeLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:layout_marginLeft="6dp"
+		android:layout_marginRight="6dp"
+		android:background="@drawable/bg_login"
+		android:layout_height="match_parent">
+
+
+    <LinearLayout
+		android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout 
+            android:id="@+id/layout_get_city"
+            android:layout_width="match_parent"
+	        android:layout_height="55dip"
+	        android:layout_marginTop="22dip"
+	        >
+	        <ImageView 
+	            android:id="@+id/image_city"
+	            android:layout_width="wrap_content"
+         		android:layout_height="wrap_content"
+         		android:src="@mipmap/login_city_icon"
+         		android:layout_centerVertical="true"
+	            android:paddingLeft="17dip"/>
+	        
+	        <TextView 
+	            android:id="@+id/city"
+	            android:layout_width="match_parent" 
+	            android:gravity="center_vertical"
+	            android:hint="@string/hint_city"
+		        android:layout_height="44dip"
+		        android:layout_toRightOf="@+id/image_city" 
+		        android:layout_centerVertical="true"
+		        android:layout_marginLeft="10dp"   
+		        android:singleLine="true"
+		        android:textSize="16sp"
+		        android:textColor="@color/label_light"
+		        />
+	    </RelativeLayout>
+		<View
+			android:layout_width="match_parent"
+			android:background="#e5e5e5"
+			android:layout_marginLeft="10dp"
+			android:layout_height="1dp">
+
+		</View>
+        <RelativeLayout 
+            android:id="@+id/layout_get_school"
+            android:layout_width="match_parent"
+	        android:layout_height="55dip"
+	      	>
+	        <ImageView 
+	            android:id="@+id/image_school"
+	            android:layout_width="wrap_content"
+         		android:layout_height="wrap_content"
+         		android:src="@mipmap/login_school_icon"
+         		android:layout_centerVertical="true"
+	            android:paddingLeft="17dip"/>
+	        
+	        <TextView 
+	            android:id="@+id/school"
+	            android:layout_width="match_parent" 
+	            android:gravity="center_vertical"
+	            android:hint="@string/hint_school"
+		        android:layout_height="44dip"
+		        android:layout_toRightOf="@+id/image_school" 
+		        android:layout_centerVertical="true"
+		        android:layout_marginLeft="10dp"   
+		        android:singleLine="true"
+		        android:textSize="16sp"
+		        android:textColor="@color/label_light"/>
+	    </RelativeLayout>
+        
+    </LinearLayout>
+		<View
+			android:layout_width="match_parent"
+			android:background="#e5e5e5"
+			android:layout_marginLeft="10dp"
+			android:layout_height="1dp">
+
+		</View>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="55dp">
+
+			<EditText
+				android:layout_toRightOf="@+id/register_phone_tv"
+				android:id="@+id/username"
+				style="@style/input_fullline"
+				android:digits="0123456789"
+				android:hint="@string/hint_userphone"
+				android:maxLength="11"
+				android:inputType="phone"
+				android:paddingLeft="5dp"
+				android:paddingRight="10dip" />
+
+			<TextView
+				android:id="@+id/register_phone_tv"
+				style="@style/label"
+				android:layout_alignBaseline="@+id/username"
+				android:paddingLeft="15dip"
+				android:text="@string/phone" />
+		</RelativeLayout>
+		<View
+			android:layout_width="match_parent"
+			android:background="#e5e5e5"
+			android:layout_marginLeft="10dp"
+			android:layout_height="1dp">
+
+		</View>
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="55dp">
+
+			<EditText
+				android:layout_toRightOf="@+id/register_code_tv"
+				android:paddingLeft="5dp"
+				android:id="@+id/verification"
+				android:inputType="number"
+				style="@style/input_fullline"
+				 />
+			<TextView
+				android:id="@+id/register_code_tv"
+				style="@style/label"
+				android:layout_alignBaseline="@+id/verification"
+				android:paddingLeft="15dip"
+				android:layout_centerVertical="true"
+				android:text="@string/code" />
+
+			<TextView
+				android:id="@+id/text_verification"
+				android:layout_width="72dp"
+				android:layout_height="36dp"
+				android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+				android:layout_marginRight="17dip"
+				android:background="@drawable/btn_getcode"
+				android:clickable="true"
+				android:gravity="center"
+				android:elevation="10dp"
+				android:stateListAnimator="@null"
+				android:text="@string/get_verification"
+				android:textColor="@color/btn_text"
+				android:textSize="16sp" />
+		</RelativeLayout>
+		<View
+			android:layout_width="match_parent"
+			android:background="#e5e5e5"
+			android:layout_marginLeft="10dp"
+			android:layout_height="1dp">
+
+		</View>
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="55dp">
+
+			<EditText
+				android:layout_toRightOf="@+id/register_pass_tv"
+				android:id="@+id/password"
+				style="@style/input_fullline"
+				android:digits="0123456789"
+				android:hint="@string/hint_password_details"
+				android:inputType="numberPassword"
+				android:maxLength="6"
+				android:paddingLeft="5dp"
+				android:paddingRight="10dip" />
+
+			<TextView
+				android:id="@+id/register_pass_tv"
+				style="@style/label"
+				android:layout_alignBaseline="@+id/password"
+				android:paddingLeft="15dip"
+				android:text="@string/password" />
+
+			<CheckBox
+				android:id="@+id/checkBox_show_passward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="17dip"
+				android:background="@null"
+				android:visibility="gone"
+				android:button="@drawable/btn_check"
+				android:checked="false" />
+			<!--  <ImageView
+                android:id="@+id/image_show_passward"
+                android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:src="@drawable/login_remember_passwords_icon_pre"
+                 android:layout_centerVertical="true"
+                 android:layout_alignParentRight="true"
+                android:layout_marginRight="17dip"/> -->
+		</RelativeLayout>
+		<View
+			android:layout_width="match_parent"
+			android:background="#e5e5e5"
+			android:layout_marginLeft="10dp"
+			android:layout_height="1dp">
+
+		</View>
+
+	</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:orientation="horizontal"
+			android:layout_height="wrap_content">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="15dp"
+				android:text="@string/registe_clause"
+				android:textSize="14sp"
+				android:textColor="@color/hint"
+				android:layout_marginTop="10dip"/>
+			<TextView
+				android:id="@+id/register_html"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/registe_condition"
+				android:textSize="14sp"
+				android:textColor="@color/text_hint_miss"
+				android:layout_marginTop="10dip"/>
+		</LinearLayout>
+
+
+    
+    <Button
+        android:id="@+id/submit"
+        android:onClick="onClick_register"
+		android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="24dip"
+        android:layout_marginRight="24dip"
+        android:background="@drawable/btn_yuyue_none"
+        android:text="@string/registe_now"
+        android:textColor="@color/btn_text"
+        android:textSize="18sp" />
+	</LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<View
+			android:visibility="gone"
+			android:id="@+id/top_menu_view_2"
+			android:layout_width="match_parent"
+			android:layout_height="20dp"
+			android:background="@color/act_bg"/>
+		<ImageView
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="12dp"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:src="@mipmap/cantact_us"/>
+	</LinearLayout>
+</FrameLayout>

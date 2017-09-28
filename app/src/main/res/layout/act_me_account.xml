@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/layout_navbar"
+        android:visibility="gone"
+        style="@style/navbar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/my_account_title" />
+
+        <ImageView
+            android:id="@+id/image_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/login_return_button_selected" />
+
+        <TextView
+            style="@style/label"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="17dip"
+            android:text="@string/my_edit"
+            android:textColor="@color/list_letter" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#f5f5f5"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/white" >
+
+        <com.klcxkj.rs.widget.CircleImageView
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/mine_img"
+            android:src="@mipmap/icon_defult"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/mine_img"
+            android:gravity="center|left"
+            android:layout_toLeftOf="@+id/button_unbind"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/mine_tellnumber"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_centerVertical="true"
+                android:textColor="@color/txt_one"
+               android:gravity="bottom"
+                android:layout_marginBottom="2dp"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/mine_school"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/txt_two"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+               />
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/button_unbind"
+            android:layout_width="100dp"
+            android:layout_height="38dp"
+            android:elevation="10dp"
+            android:stateListAnimator="@null"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:background="@drawable/btn_getcode"
+            android:text="@string/unbind"
+            android:textColor="@color/btn_text"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#f5f5f5"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+         >
+
+        <TextView
+            style="@style/labe_mine"
+            android:layout_centerVertical="true"
+            android:text="@string/campus_card_apply_name"
+            android:paddingLeft="15dp"
+            android:textColor="@color/label_light" />
+
+        <TextView
+            android:id="@+id/mine_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/txt_two"
+            android:layout_marginRight="17dp"
+            android:textSize="16sp"
+            android:text="--"
+            />
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginLeft="15dp"
+        android:background="#e5e5e5"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <TextView
+            android:id="@+id/text_apply_sex"
+            style="@style/labe_mine"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dip"
+            android:text="@string/campus_card_apply_sex"
+            android:textColor="@color/label_light" />
+
+        <TextView
+            android:id="@+id/mine_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:textColor="@color/txt_two"
+            android:text="--"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginLeft="15dp"
+        android:background="#e5e5e5"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <TextView
+            style="@style/labe_mine"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dip"
+            android:text="@string/campus_card_apply_student_number"
+            android:textColor="@color/label_light" />
+
+        <TextView
+            android:id="@+id/mine_idcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:textColor="@color/txt_two"
+            android:text="--"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#f5f5f5"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/mine_building_layout"
+        >
+
+        <TextView
+            android:id="@+id/mine_ban"
+            style="@style/labe_mine"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:text="@string/campus_card_apply_dormitory_ban"
+            android:textColor="@color/label_light" />
+
+        <TextView
+            android:id="@+id/mine_building_tv"
+            android:layout_toRightOf="@+id/mine_ban"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/txt_two"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@mipmap/i_arrow_list_pre" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginLeft="15dp"
+        android:background="#e5e5e5"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/mine_room_layout"
+        >
+
+        <TextView
+            style="@style/labe_mine"
+            android:id="@+id/mine_room"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:text="@string/campus_card_apply_dormitory_room"
+            android:textColor="@color/label_light" />
+
+        <TextView
+            android:id="@+id/mine_dormitoryroom_tv"
+            android:layout_toRightOf="@+id/mine_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/txt_two"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@mipmap/i_arrow_list_pre" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dip"
+        android:background="@drawable/login_input_list_selected" >
+
+        <TextView
+            style="@style/label"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dip"
+            android:text="@string/my_change_password"
+            android:textColor="@color/label_light" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@mipmap/i_arrow_list_pre" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#f5f5f5"></View>
+    <Button
+        android:id="@+id/button_out"
+        android:layout_width="match_parent"
+        android:layout_height="42dip"
+        android:layout_marginBottom="7dip"
+        android:layout_marginLeft="18dip"
+        android:layout_marginRight="18dip"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_yuyue"
+        android:text="@string/logout"
+        android:textColor="@color/btn_text"
+        android:textSize="18sp" />
+
+</LinearLayout>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.klcxkj.rs.activity.Xizao_CountActivity">
+
+    <RelativeLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/layout_navbar"
+        style="@style/navbar" >
+
+        <TextView
+            style="@style/title"
+            android:text="校园热水" />
+
+        <ImageView
+            android:id="@+id/iamge_me"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:visibility="gone"
+            android:src="@mipmap/home_i_button_nor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/iamge_me"
+            android:layout_alignTop="@+id/iamge_me"
+            android:background="@drawable/red_point"
+            android:gravity="center"
+            android:text="新"
+            android:textColor="@color/white"
+            android:textSize="8sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:scaleType="center"
+            android:src="@mipmap/home_message_icon" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/xizao_count_hint"
+        android:layout_below="@+id/layout_navbar"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_title_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="36dp">
+        <TextView
+            android:text="请在"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="08'00''"
+            android:textColor="@color/list_letter"
+            android:id="@+id/xizao_count_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="内到达浴室，逾期将自动取消"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/xizao_count_content"
+        android:layout_below="@+id/xizao_count_hint"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/login_title_bg"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="48dp"
+        android:orientation="vertical"
+        android:layout_marginRight="48dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:text="待服务"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/tab_plus_press"
+            android:layout_height="80dp" />
+
+        <RelativeLayout
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="24dp">
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="8dp"
+                android:text="预约浴位"
+                android:textSize="16sp"
+                android:textColor="@color/list_letter"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="02"
+                android:textSize="16sp"
+                android:layout_marginRight="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="24dp">
+            <TextView
+                android:textSize="16sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="8dp"
+                android:text="浴室位置"
+                android:textColor="@color/list_letter"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="16sp"
+                android:text="测试浴室02"
+                android:layout_marginRight="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="1dp"
+            android:background="#f1f1f1"></View>
+        <RelativeLayout
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="24dp">
+            <TextView
+                android:textSize="16sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="8dp"
+                android:text="开柜密码"
+                android:textColor="@color/list_letter"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="16sp"
+                android:text="123456782"
+                android:inputType="textPassword"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/xizao_count_im"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/xizao_count_im"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/kaiguimima_hide"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"/>
+        </RelativeLayout>
+       <LinearLayout
+           android:background="@color/white"
+           android:layout_width="match_parent"
+           android:layout_height="32dp">
+
+       </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="36dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_below="@+id/xizao_count_content"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/home_tip2"/>
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:textSize="14sp"
+            android:textColor="@color/tab_plus_press"
+            android:layout_width="wrap_content"
+            android:text="@string/xizao_count_hint"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/xizao_count_btn"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:text="取 消"
+        android:textSize="16sp"
+        android:background="@drawable/btn_yuyue"
+        android:textColor="@color/title_main_color"
+        android:layout_height="45dp" />
+</RelativeLayout>

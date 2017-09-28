@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.klcxkj.rs.activity.XizaoActivity">
+
+
+    <RelativeLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/layout_navbar"
+        style="@style/navbar" >
+
+        <TextView
+            style="@style/title"
+            android:text="校园热水" />
+
+        <ImageView
+            android:id="@+id/iamge_me"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:src="@mipmap/home_i_button_nor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/iamge_me"
+            android:layout_alignTop="@+id/iamge_me"
+            android:background="@drawable/red_point"
+            android:gravity="center"
+            android:text="新"
+            android:textColor="@color/white"
+            android:textSize="8sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/text_selected"
+            android:padding="15dp"
+            android:scaleType="center"
+            android:src="@mipmap/shuaxin" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_below="@+id/layout_navbar"
+        android:layout_above="@+id/xizao_choose"
+        android:background="#f1f1f1"
+        android:layout_height="1dp">
+
+    </View>
+
+    <RelativeLayout
+        android:background="@color/title_main_color"
+        android:id="@+id/xizao_choose"
+        android:layout_below="@+id/layout_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <ImageView
+            android:id="@+id/xizao_location"
+            android:src="@mipmap/login_city_icon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="14dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/relayout_txt"
+          android:layout_toRightOf="@+id/xizao_location"
+            android:layout_marginLeft="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1号楼2层(男)"
+            android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/relayout_arrow"
+            android:src="@mipmap/arrow_down"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/xizao_choose"
+        android:layout_above="@+id/xizao_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <LinearLayout
+          android:layout_alignParentTop="true"
+          android:layout_width="match_parent"
+          android:gravity="center"
+          android:orientation="horizontal"
+          android:layout_height="24dp">
+         <ImageView
+             android:src="@mipmap/hom_gridview"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+      </LinearLayout>
+
+
+       <GridView
+           android:layout_centerHorizontal="true"
+           android:layout_marginTop="60dp"
+           android:listSelector="@android:color/transparent"
+           android:id="@+id/grifview"
+           android:numColumns="4"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+       </GridView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_above="@+id/xizao_btn_yuyue"
+        android:background="@drawable/bg_hint_xizao"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="6dp"
+        android:id="@+id/xizao_hint"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/yuyue_tv_im"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:src="@mipmap/tips_notification_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            />
+        <TextView
+            android:layout_toRightOf="@+id/yuyue_tv_im"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:text="@string/xizao_hint"
+            />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/xizao_btn_yuyue"
+        android:layout_width="match_parent"
+       android:layout_marginBottom="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:text="预 约"
+        android:textSize="16sp"
+        android:background="@drawable/btn_yuyue"
+        android:textColor="@color/title_main_color"
+        android:layout_height="45dp" />
+
+
+
+
+
+</RelativeLayout>

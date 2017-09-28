@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginTop="70dp"
+        android:src="@mipmap/welcome_3" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:text="更优惠" 
+        android:textSize="25sp"
+        android:textColor="@color/list_letter"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="16dp"
+        android:text="随时了解最新优惠信息以及公告"
+        android:textSize="18sp"
+        android:textColor="@color/list_letter" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" >
+         <Button
+            android:onClick="onClick_register"
+             android:layout_width="135dp"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/welcome_login_button_selected"
+	        android:text="@string/register"
+	        android:textColor="@color/white" />
+        <Button
+            android:onClick="onClick_login"
+            android:layout_width="135dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="15dp"
+	        android:background="@drawable/welcome_login_button_selected"
+	        android:text="@string/login"
+	        android:textColor="@color/white"  />
+        
+       
+    </LinearLayout>
+
+</RelativeLayout>

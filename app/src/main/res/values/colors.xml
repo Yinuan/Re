@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="title_main_color">#ffffff</color>
+
+    <!-- app 主色调 原来为3cbada-->
+    <color name="act_bg">#12aaf6</color><!-- activity 背景色 -->
+    
+    <color name="black">#000000</color>
+    <color name="white">#ffffffff</color>
+
+    <color name="popup_mask">#CCD9E0E6</color>
+    <color name="text_hint">#CDCDCD</color>
+   
+    <color name="search_bg">#f0f4f6</color>
+
+    <color name="btn_text">#F5F5F5</color>
+    <color name="bg_view">#e5e5e5</color>
+
+    <color name="tab_plus_press">#42d97e</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="hint">#a2aaac</color>
+
+    <color name="label_light">#39464a</color>
+
+    <!-- 半透明的黑色 -->
+    <!--按钮不可点击颜色-->
+    <color name="btn_none">#cccccc</color>
+
+    <color name="monney">#f74c31</color>
+    <color name="red">#F7313B</color>
+
+    <!-- 网络错误页面的字体颜色 -->
+
+    <color name="list_letter_text">#39464a</color>
+    <color name="list_name_text">#a2aaac</color>
+    <color name="list_letter">#17b1ea</color>
+    <color name="letter_bg">#fefefe</color>
+    
+    <color name="home_campus_card_line">#f1f1f1</color>
+    <color name="code_get">#39a3fd</color>
+    <color name="text_hint_miss">#01a5ec</color>
+
+    <color name="blackaph">#1f000000</color>
+    <color name="txt_one">#333333</color>
+    <color name="txt_two">#666666</color>
+    <color name="txt_three">#999999</color>
+    
+</resources>

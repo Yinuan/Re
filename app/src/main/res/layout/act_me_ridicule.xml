@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" 
+    android:id="@+id/root_layout">
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/layout_navbar"
+        style="@style/navbar" >
+        <TextView style="@style/title" android:text="@string/my_make_complaints" />
+        <ImageView 
+            android:id="@+id/image_back"
+            android:layout_width="wrap_content"
+         	android:layout_height="match_parent"
+         	android:layout_alignParentLeft="true"
+         	android:paddingLeft="15dp"
+         	android:paddingRight="15dp"
+         	android:layout_centerVertical="true"
+         	android:src="@drawable/login_return_button_selected"/>
+    </RelativeLayout>
+
+    <include layout="@layout/top_title_style"></include>
+    <LinearLayout
+        android:id="@+id/me_ridicule_detail_hint"
+        android:layout_below="@+id/top_menu"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical|left"
+        android:background="@color/btn_text">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/me_ridicule_detail_hint"
+            android:textColor="@color/txt_one"/>
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/layout_content"
+        android:layout_below="@+id/me_ridicule_detail_hint"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText 
+            android:id="@+id/edit_ridicule_detail"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:maxLength="200"
+            android:textColorHint="@color/hint"
+            android:background="@null"
+            android:textSize="16sp"
+            android:hint="@string/me_ridicule_detail"
+            android:padding="10dp"
+            android:gravity="top"/>
+	    
+	</LinearLayout>
+    <View
+        android:id="@+id/layout_view_nu"
+        android:layout_below="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/btn_text">
+
+    </View>
+    
+    <Button
+         android:id="@+id/buttonSubmit"
+        android:layout_below="@+id/layout_view_nu"
+         android:onClick="onClick_login"
+         android:layout_width="match_parent"
+         android:layout_height="45dp"
+         android:layout_marginTop="30dip"
+         android:layout_marginBottom="7dip"
+         android:layout_marginLeft="18dip"
+         android:layout_marginRight="18dip"
+         android:background="@drawable/btn_yuyue"
+         android:text="@string/submit"
+         android:textColor="@color/btn_text"
+         android:textSize="18sp" 
+         />
+
+    <include layout="@layout/loading" />
+</RelativeLayout>

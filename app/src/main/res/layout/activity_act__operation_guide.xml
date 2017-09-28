@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/top_title_style"></include>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/btn_text">
+
+    </View>
+    <RelativeLayout
+        android:id="@+id/operation_one"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/login_input_list_selected"
+        >
+        <TextView
+            style="@style/labe_mine"
+            android:id="@+id/mine_room"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:text="@string/operation_bindCard"
+            android:textColor="@color/label_light" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@mipmap/i_arrow_list_pre" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/btn_text"></View>
+    <RelativeLayout
+        android:id="@+id/operation_two"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/login_input_list_selected"
+        >
+        <TextView
+            style="@style/labe_mine"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:text="@string/operation_bindCardByMyself"
+            android:textColor="@color/label_light" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@mipmap/i_arrow_list_pre" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/btn_text"></View>
+    <RelativeLayout
+        android:id="@+id/operation_three"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/login_input_list_selected"
+        >
+        <TextView
+            style="@style/labe_mine"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:text="@string/operation_question"
+            android:textColor="@color/label_light" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:src="@mipmap/i_arrow_list_pre" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/btn_text"></View>
+</LinearLayout>

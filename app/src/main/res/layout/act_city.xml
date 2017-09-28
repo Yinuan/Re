@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    <RelativeLayout 
+        android:id="@+id/layout_navbar"
+		android:visibility="gone"
+        style="@style/navbar" >
+        <TextView 
+            android:id="@+id/text_title"
+            style="@style/title" 
+            android:text="@string/title_city" />
+        <ImageView 
+            android:id="@+id/image_back"
+            android:layout_width="wrap_content"
+         	android:layout_height="match_parent"
+         	android:layout_alignParentLeft="true"
+         	android:paddingLeft="15dp"
+         	android:paddingRight="15dp"
+         	android:layout_centerVertical="true"
+         	android:src="@drawable/login_return_button_selected"/>
+    </RelativeLayout>
+	<include layout="@layout/top_title_style"></include>
+
+    <LinearLayout
+		android:layout_below="@+id/top_menu"
+		android:id="@+id/layout_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+	    <RelativeLayout 
+	        android:id="@+id/layout_search"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+			<com.klcxkj.rs.widget.ClearEditText
+				android:id="@+id/search"
+				android:background="@drawable/search_style"
+				android:layout_width="match_parent"
+				android:layout_marginTop="10dp"
+				android:layout_marginLeft="12dp"
+				android:layout_marginBottom="10dp"
+				android:layout_marginRight="12dp"
+				android:drawablePadding="10dp"
+				android:textSize="16sp"
+				android:drawableStart="@mipmap/login_search_icon"
+				android:hint="输入城市名或拼音查询"
+				android:layout_height="42dp"
+				android:paddingLeft="12dp"
+				android:drawableLeft="@mipmap/login_search_icon"/>
+	        <ImageView
+	            android:id="@+id/image_search"
+	            android:layout_width="wrap_content"
+         		android:layout_height="wrap_content"
+         		android:src="@mipmap/login_search_icon"
+				android:visibility="gone"
+         		android:layout_centerVertical="true"
+	            android:paddingLeft="15dip"/>
+	        
+	        <EditText 
+	            android:id="@+id/edit_text_city"
+	            android:layout_width="match_parent" 
+	            android:hint="@string/hint_city_name"
+		        android:layout_height="44dip"
+				android:visibility="gone"
+		        android:layout_toRightOf="@+id/image_search" 
+		        android:layout_marginLeft="10dp"   
+		        android:singleLine="true"
+		        android:textColorHint="@color/hint"
+		        android:textSize="14sp"
+		        android:background="@color/search_bg"/>
+	    </RelativeLayout>
+
+	    
+	</LinearLayout>
+	<ListView
+		android:layout_below="@+id/layout_content"
+		android:layout_marginTop="8dp"
+		android:id="@+id/list_city"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:divider="#d5dbdc"
+		android:dividerHeight="1px"
+		android:background="@color/white"/>
+	<ImageView
+	    android:layout_width="0.5dp"
+	    android:layout_height="match_parent"
+	    android:background="#d5dbdc"
+	    android:layout_alignTop="@+id/sideBar"
+	    android:layout_alignBottom="@+id/sideBar"
+	    android:layout_toLeftOf="@+id/sideBar"/>
+    <com.klcxkj.rs.view.SideBar2
+        android:id="@+id/sideBar"
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+		android:layout_marginTop="8dp"
+        android:layout_below="@+id/layout_content"
+        android:layout_alignParentRight="true"
+        android:background="@color/letter_bg" />
+    
+    <include layout="@layout/loading" />
+</RelativeLayout>

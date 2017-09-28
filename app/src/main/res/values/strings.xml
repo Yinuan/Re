@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--极光推送-->
+
+    <string name="app_name">校园热水</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="forget_password"><u>忘记密码?</u></string>
+    <string name="verif_code_sms_succ">验证码已发送，请查收。</string>
+    <string name="verif_code_sms_fail">验证码发送失败，请稍候重试。</string>
+    <string name="title_city">请选择城市</string>
+    <string name="title_school">请选择学校</string>
+    <string name="submit">提交</string>
+    <string name="submit_rechage">立即充值</string>
+    <string name="bind">绑定</string>
+    <string name="done">确定</string>
+    <string name="logout">退出登录</string>
+    <string name="unbind">解除绑定</string>
+    <string name="next">下一步</string>
+    <string name="campus_card">校园热水</string>
+    <string name="apply_card">自助申卡</string>
+    <string name="fill_card">自助补卡</string>
+    <string name="hint_city_name">请输入城市名</string>
+    <string name="hint_school_name">请输入学校名</string>
+    <string name="hint_name">请输入姓名</string>
+    <string name="hint_userphone">请输入手机号</string>
+    <string name="hint_cardID">请输入卡号</string>
+    <string name="hint_city">城市</string>
+    <string name="hint_school">学校</string>
+    <string name="phone">手机号：</string>
+    <string name="code">验证码：</string>
+    <string name="password">密&#8194;&#8194;码：</string>
+    <string name="newpassword">新密码：</string>
+    <string name="phone_code_hint">手机验证码已发送至您185*****403的手机</string>
+    <string name="hint_password">请输入密码</string>
+    <string name="hint_password_details">设置6位数字</string>
+    <string name="hint_verification_code">请输入验证码</string>
+    <string name="registe_now">注册</string>
+    <string name="get_verification">获取</string>
+    <string name="registe_clause">注册即表示我同意热水校园的</string>
+    <string name="registe_condition">服务条款</string>
+
+    <string name="loading">加载中</string>
+    <string name="loading_refresh">正在获取新数据...</string>
+
+    <string name="server_error">服务器错误</string>
+    <string name="json_error">服务器错误，json格式不正确</string>
+    <string name="card_unbind">卡片未绑定</string>
+    <string name="timeout_error">请求超时，请检查您的网络.</string>
+    <string name="operate_error">操作失败，请稍候重试.</string>
+
+    <string name="campus_card_fill_card">补卡</string>
+    <string name="campus_card_loss">挂失</string>
+    <string name="campus_card_rechage">充值</string>
+    <string name="campus_card_apply_name">姓&#8194;&#8194;名:</string>
+    <string name="campus_card_apply_sex">性&#8194;&#8194;别:</string>
+    <string name="campus_card_apply_student_number">身份证号:</string>
+    <string name="campus_card_apply_dormitory_ban">楼&#8194;&#8194;栋:</string>
+    <string name="campus_card_apply_dormitory_room">房间号:</string>
+    <string name="campus_card_apply_man">男</string>
+    <string name="campus_card_apply_woman">女</string>
+    <string name="campus_card_rechage_success">您已成功充值%s，\n请到附近的热水自助终端领取您的卡片。</string>
+    <string name="campus_card_rechage_success2">您已成功充值%s，\n请到附近的热水自助终端把钱转入卡里。</string>
+    <string name="apply_card_rechege">您已成功提交申请，本业务需预充%s元，\n才可领卡。</string>
+    <string name="campus_card_rechage_done">完成</string>
+
+    <string name="campus_card_bind_title">绑定校园卡</string>
+    <string name="campus_card_bind_title_2">绑定校园卡以查看余额</string>
+    <string name="campus_card_bind_cardDetails">将卡插入转账充值机上以获取卡片信息</string>
+    <string name="campus_card_bind_cardID">卡号:</string>
+    <string name="campus_card_bind_cardPassword">PIN码:</string>
+    <string name="campus_card_bind_cardPassword_hint">请输入PIN码</string>
+
+    <string name="my_change_password">修改密码</string>
+    <string name="my_change_myinfo_hint">请输入身份证号</string>
+    <string name="my_account_title">我的账户</string>
+
+    <string name="my_message_center">最新资讯</string>
+    <string name="my_make_complaints">投诉建议</string>
+    <string name="my_password_detail_old">请输入旧密码</string>
+    <string name="my_password_detail_new">设置6位数字</string>
+    <string name="my_old_password">旧密码</string>
+    <string name="my_new_password">新密码</string>
+    <string name="me_ridicule_repair">故障报修</string>
+    <string name="me_ridicule_detail">请输入您的宝贵意见:</string>
+    <string name="me_ridicule_detail_hint">我们虚心接受您的意见与建议</string>
+    <string name="me_ridicule_repair_detail">故障详情描述:</string>
+    <string name="my_edit">编辑</string>
+    <string name="rechage_cardID">卡&#8194;&#8194;号：</string>
+    <string name="rechage_user_name">姓&#8194;&#8194;名：</string>
+    <string name="rechage_user_balance">卡余额：</string>
+    <string name="rechage_money">充值金额：</string>
+    <string name="rechage_money_value">50</string>
+    <string name="rechage_money_value_none">未领金额:</string>
+    <string name="rechang_monney_value_hint">请选择充值金额</string>
+    <string name="campus_card_status">卡状态：</string>
+
+
+    <string name="dialog_content_register_no_register">该手机号码已经注册，是否直接登录？</string>
+    <string name="dialog_content_register_success">注册成功，请登录</string>
+    <string name="dialog_content_out_confirm">您确认要退出登录吗？</string>
+    <string name="dialog_content_fill_card">补卡后，原卡将无法使用请谨慎补卡</string>
+
+    <string name="xizao_hint">请点击可用浴位进行预约\n若无可用浴位，软件将自动排队</string>
+    <string name="xizao_count_hint">请尽快到达浴室，超时8分钟将自动取消
+                                    \n点击关闭后才可以结束洗澡流程</string>
+    <string name="bind_card">绑卡</string>
+    <string name="bind_card_name">卡号:</string>
+    <string name="bind_card_stuts">状态: </string>
+    <string name="pop_title">警告</string>
+    <string name="pop_content">解除绑定就丢失账户信息以及账户余额等，请谨慎操作!</string>
+
+    <string name="operation_bindCard">绑卡流程</string>
+    <string name="operation_bindCardByMyself">自助办卡流程</string>
+    <string name="operation_question">常见问题</string>
+
+    <string name="contact_copyRight">版权声明</string>
+    <string name="contact_Disclaimer">免责声明</string>
+    <string name="contact_tell">服务电话</string>
+
+    <string name="monney_card_info">请确认卡片信息:</string>
+    <string name="monney_card_num">卡&#8194;&#8194;号:</string>
+    <string name="monney_card_name">姓&#8194;&#8194;名:</string>
+    <string name="monney_card_monney">申诉金额:</string>
+
+
+</resources>

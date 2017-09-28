@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="72dp"
+    android:background="@mipmap/login_input_list_nor" >
+
+	<com.klcxkj.rs.widget.CircleImageView
+		android:layout_centerVertical="true"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="15dp"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:id="@+id/message_img" />
+
+	<LinearLayout
+		android:layout_toRightOf="@+id/message_img"
+		android:layout_marginLeft="10dp"
+		android:layout_centerVertical="true"
+		android:layout_width="wrap_content"
+		android:orientation="vertical"
+		android:gravity="center|left"
+		android:layout_height="match_parent">
+		<TextView
+			android:id="@+id/text_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="放假了"
+			android:textColor="@color/txt_two"
+			android:textSize="18sp"
+			android:singleLine="true"
+			android:layout_marginBottom="6dp"
+			android:maxWidth="170dp" />
+
+		<TextView
+			android:id="@+id/text_content"
+			android:textColor="@color/txt_three"
+			android:textSize="14sp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/text_title"
+			android:text="2017/8/25 15:30"
+			android:singleLine="true"/>
+	</LinearLayout>
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:layout_marginRight="17dp"
+		android:src="@mipmap/i_arrow_list_pre" />
+
+
+</RelativeLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/popup_mask"
+        android:layout_height="32dp">
+
+        <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="浴室"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textSize="14sp"
+            android:text="空闲/总计"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_below="@+id/layout_navbar"
+        android:layout_above="@+id/xizao_choose"
+        android:background="#f1f1f1"
+        android:layout_height="1dp">
+
+    </View>
+<RelativeLayout
+    android:background="@color/title_main_color"
+    android:id="@+id/line11"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <TextView
+        android:textColor="@color/tab_plus_press"
+        android:id="@+id/pop_tv_1"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:text="1号楼2层(男)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:text="12/12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="#f1f1f1"
+        android:layout_marginLeft="10dp"
+        android:layout_height="1dp">
+
+    </View>
+    <RelativeLayout
+        android:background="@color/title_main_color"
+        android:id="@+id/line22"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <TextView
+            android:id="@+id/pop_tv_2"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="10号楼2层(女)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="10/10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</LinearLayout>

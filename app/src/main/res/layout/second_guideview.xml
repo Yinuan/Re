@@ -1,0 +1,33 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@mipmap/welcome_2"
+    android:orientation="vertical"
+    android:layout_height="match_parent" >
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_weight="0.8"
+
+       android:layout_height="0dp">
+
+   </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <Button
+            android:onClick="onClick_login"
+            android:layout_width="108dp"
+            android:layout_height="42dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_little"
+            android:text="开始体验"
+            android:layout_marginTop="120dp"
+            android:textColor="#f7f5ff"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>
