@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <include layout="@layout/top_title_style"/>
+   <LinearLayout
+       android:id="@+id/weihu_project_list"
+       android:layout_width="match_parent"
+       android:orientation="horizontal"
+       android:background="@drawable/bg_home_one"
+       android:layout_margin="4dp"
+       android:layout_height="100dp">
+      <RelativeLayout
+          android:layout_width="72dp"
+          android:layout_height="match_parent">
+         <com.klcxkj.rs.widget.CircleImageView
+             android:id="@+id/weihu_project_manage_img"
+             android:layout_centerHorizontal="true"
+             android:layout_marginTop="16dp"
+             android:layout_height="42dp"
+             android:src="@mipmap/home_klcxkj"
+             android:layout_width="42dp">
+
+         </com.klcxkj.rs.widget.CircleImageView>
+
+      </RelativeLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:orientation="vertical"
+          android:layout_height="match_parent">
+         <TextView
+             android:id="@+id/weihu_project_name"
+             android:layout_width="match_parent"
+             android:textSize="20sp"
+             android:gravity="center_vertical"
+             android:textColor="@color/txt_one"
+             android:text="重庆大学"
+             android:layout_height="48dp" />
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="20dp">
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_height="14dp"
+                android:src="@mipmap/man"/>
+            <TextView
+                android:id="@+id/weihu_project_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18565651403"
+                android:textSize="14sp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:textColor="@color/txt_two"/>
+
+            <TextView
+                android:id="@+id/weihu_project_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="xxx"
+                android:textSize="14sp"
+                android:textColor="@color/txt_two"
+                android:layout_marginRight="10dp"/>
+         </RelativeLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="20dp">
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_height="14dp"
+                android:src="@mipmap/time"/>
+            <TextView
+                android:id="@+id/weihu_project_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017-8-30"
+                android:textSize="14sp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:textColor="@color/txt_two"/>
+
+            <ImageView
+                android:layout_toLeftOf="@+id/weihu_project_water_watch"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="18dp"
+                android:src="@mipmap/water_watch"/>
+            <TextView
+                android:id="@+id/weihu_project_water_watch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="12365"
+                android:textSize="14sp"
+                android:textColor="@color/txt_two"
+                android:layout_marginRight="10dp"/>
+         </RelativeLayout>
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="12dp">
+
+         </LinearLayout>
+      </LinearLayout>
+   </LinearLayout>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:id="@+id/boss_project_detail_list_1"
+       >
+
+      <TextView
+          style="@style/labe_mine"
+          android:id="@+id/mine_room"
+          android:layout_centerVertical="true"
+          android:paddingLeft="15dp"
+          android:text="楼栋数量"
+          android:textColor="@color/label_light" />
+
+      <TextView
+          android:id="@+id/boss_project_detail_list_1_num"
+          android:layout_toRightOf="@+id/mine_room"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="10dp"
+          android:textColor="@color/txt_two"
+          android:textSize="17sp" />
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="17dp"
+          android:src="@mipmap/i_arrow_list_pre" />
+   </RelativeLayout>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:id="@+id/boss_project_detail_list_2"
+       >
+
+   <TextView
+       style="@style/labe_mine"
+       android:layout_centerVertical="true"
+       android:text="总人数"
+       android:paddingLeft="15dp"
+       android:textColor="@color/label_light" />
+
+   <TextView
+       android:background="@null"
+       android:id="@+id/boss_project_detail_list_2_tv"
+       android:layout_width="match_parent"
+       android:gravity="right|center_vertical"
+       android:layout_height="wrap_content"
+       android:layout_centerVertical="true"
+       android:layout_alignParentRight="true"
+       android:textColor="@color/txt_two"
+       android:layout_marginRight="17dp"
+       android:singleLine="true"
+       android:textSize="17sp"
+       android:hint="--"
+       android:textColorHint="@color/txt_two"
+       />
+   </RelativeLayout>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:id="@+id/boss_project_detail_list_3"
+       >
+
+      <TextView
+          style="@style/labe_mine"
+          android:layout_centerVertical="true"
+          android:text="男生人数"
+          android:paddingLeft="15dp"
+          android:textColor="@color/label_light" />
+
+      <TextView
+          android:background="@null"
+          android:id="@+id/boss_project_detail_list_3_tv"
+          android:layout_width="match_parent"
+          android:gravity="right|center_vertical"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/txt_two"
+          android:layout_marginRight="17dp"
+          android:singleLine="true"
+          android:textSize="17sp"
+          android:hint="--"
+          android:textColorHint="@color/txt_two"
+          />
+   </RelativeLayout>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+    android:id="@+id/boss_project_detail_list_4"
+       >
+
+      <TextView
+          style="@style/labe_mine"
+          android:layout_centerVertical="true"
+          android:text="女生人数"
+          android:paddingLeft="15dp"
+          android:textColor="@color/label_light" />
+
+      <TextView
+          android:background="@null"
+          android:id="@+id/boss_project_detail_list_4_tv"
+          android:layout_width="match_parent"
+          android:gravity="right|center_vertical"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/txt_two"
+          android:layout_marginRight="17dp"
+          android:singleLine="true"
+          android:textSize="17sp"
+          android:hint="--"
+          android:textColorHint="@color/txt_two"
+          />
+   </RelativeLayout>
+
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="6dp"
+       android:background="@color/bg_view"></View>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+      android:id="@+id/boss_project_detail_list_5"
+       >
+
+      <TextView
+          style="@style/labe_mine"
+          android:layout_centerVertical="true"
+          android:text="水表个数"
+          android:paddingLeft="15dp"
+          android:textColor="@color/label_light" />
+
+      <TextView
+          android:background="@null"
+          android:id="@+id/boss_project_detail_list_5_tv"
+          android:layout_width="match_parent"
+          android:gravity="right|center_vertical"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/txt_two"
+          android:layout_marginRight="17dp"
+          android:singleLine="true"
+          android:textSize="17sp"
+          android:hint="--"
+          android:textColorHint="@color/txt_two"
+          />
+   </RelativeLayout>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:id="@+id/boss_project_detail_list_6"
+       >
+
+      <TextView
+          style="@style/labe_mine"
+          android:layout_centerVertical="true"
+          android:text="水箱个数"
+          android:paddingLeft="15dp"
+          android:textColor="@color/label_light" />
+
+      <TextView
+          android:background="@null"
+          android:id="@+id/boss_project_detail_list_6_tv"
+          android:layout_width="match_parent"
+          android:gravity="right|center_vertical"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/txt_two"
+          android:layout_marginRight="17dp"
+          android:singleLine="true"
+          android:textSize="17sp"
+          android:hint="--"
+          android:textColorHint="@color/txt_two"
+          />
+   </RelativeLayout>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:id="@+id/boss_project_detail_list_7"
+       >
+
+      <TextView
+          style="@style/labe_mine"
+          android:layout_centerVertical="true"
+          android:text="环境温度"
+          android:paddingLeft="15dp"
+          android:textColor="@color/label_light" />
+
+      <TextView
+          android:background="@null"
+          android:id="@+id/boss_project_detail_list_7_tv"
+          android:layout_width="match_parent"
+          android:gravity="right|center_vertical"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_alignParentRight="true"
+          android:textColor="@color/txt_two"
+          android:layout_marginRight="17dp"
+          android:singleLine="true"
+          android:textSize="17sp"
+          android:hint="--"
+          android:textColorHint="@color/txt_two"
+          />
+   </RelativeLayout>
+
+
+</LinearLayout>  

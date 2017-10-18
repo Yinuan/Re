@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@mipmap/home_klcxkj"
+            android:layout_weight="3">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="2">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <ImageView
+                    android:id="@+id/operation_project_name_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@mipmap/boss_my_project"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/operation_project_name_icon"
+                    android:text="我的项目"
+                    android:layout_marginLeft="6dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/txt_one"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/boss_weihu_my_project"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <View
+                    android:id="@+id/operation_project_fenge"
+                    android:layout_width="match_parent"
+                   android:layout_centerInParent="true"
+                    android:layout_height="1dp"/>
+                <TextView
+                    android:id="@+id/operation_project_num"
+                    android:layout_centerHorizontal="true"
+                    android:layout_above="@+id/operation_project_fenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="7"
+                    android:textColor="@color/code_get"
+                    android:textSize="30sp"
+                    />
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_toRightOf="@+id/operation_project_num"
+                    android:layout_marginLeft="2dp"
+                    android:layout_above="@+id/operation_project_fenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(个)"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/code_get"
+                    android:textSize="14sp"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="6dp"
+    android:background="@color/bg_view"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
+        <include layout="@layout/b_indentity_weihu"></include>
+    </LinearLayout>
+</LinearLayout>
