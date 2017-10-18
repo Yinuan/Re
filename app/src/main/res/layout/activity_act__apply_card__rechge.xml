@@ -22,7 +22,7 @@
         android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:text="apply_card_rechege"
         android:textColor="@color/txt_two"
         android:lineSpacingExtra="4dp"

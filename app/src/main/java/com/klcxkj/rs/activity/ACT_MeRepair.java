@@ -1,17 +1,27 @@
 package com.klcxkj.rs.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
@@ -27,6 +37,7 @@ import com.klcxkj.rs.bo.Ban;
 import com.klcxkj.rs.bo.BaseBo;
 import com.klcxkj.rs.bo.QINiu;
 import com.klcxkj.rs.util.GlobalTools;
+import com.klcxkj.rs.widget.CircleImageView;
 import com.klcxkj.rs.widget.LoadingDialogProgress;
 import com.klcxkj.rs.wxdemo.GlideImageLoader;
 
@@ -57,6 +68,7 @@ public class ACT_MeRepair extends ACT_Network {
 	private List<Ban> data;
 	private ImageView add_image;
 	private ImagePicker imagePicker;
+	private CircleImageView iconDelete;
 
 	private String rTitle ="刷卡不出水";
 	private StringBuffer rContent;
@@ -94,7 +106,7 @@ public class ACT_MeRepair extends ACT_Network {
 	
 	private void findViews() {
 		showMenu("故障报修");
-
+		iconDelete = (CircleImageView) findViewById(R.id.delete_icon);
 		mEditEidiculeDetail =  (EditText)findViewById(R.id.edit_ridicule_detail);
 
 		mButtonSubmit = (Button)findViewById(R.id.buttonSubmit);
@@ -104,12 +116,12 @@ public class ACT_MeRepair extends ACT_Network {
 		gridView = (GridView) findViewById(R.id.gridview_repair);
 		gRepairApater =new GRepairApater(this);
 		data =new ArrayList<>();
-		data.add(new Ban("1","刷卡不出水"));
+		data.add(new Ban("0","刷卡不出水"));
 		data.add(new Ban("0","读卡报错"));
 		data.add(new Ban("0","领款不成功"));
 		gRepairApater.setList(data);
 		gridView.setAdapter(gRepairApater);
-		mEditEidiculeDetail.setText("刷卡不出水");
+
 	}
 	
 	private void bindEvent() {
@@ -158,16 +170,23 @@ public class ACT_MeRepair extends ACT_Network {
 //					return;
 //				}
 				progress = GlobalTools.getInstance().showDailog(ACT_MeRepair.this,"提交..");
-				if (images !=null){
+				if (images !=null && images.size()>0){
 					StringBuffer sb=new StringBuffer(QINIU_IMAGE);
 					sendGetRequest(sb.toString());
 				}else {
 					submitReportToServer("");
 				}
-
-
-
-
+			}
+		});
+		iconDelete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (images ==null){
+					return;
+				}
+				images.clear();
+				add_image.setImageResource(R.mipmap.add_imagepicker);
+				iconDelete.setVisibility(View.GONE);
 			}
 		});
 
@@ -204,8 +223,9 @@ public class ACT_MeRepair extends ACT_Network {
 		Log.d("submit", "json:" + json);
 		BaseBo result = new Gson().fromJson(json.toString(), BaseBo.class);
 		if(result.isSuccess()){
-			toast("提交成功");
-			finish();
+			//toast("提交成功");
+		//	finish();
+			showPop("提交成功!");
 		}else{
 			toast(R.string.operate_error);
 		}
@@ -252,6 +272,7 @@ public class ACT_MeRepair extends ACT_Network {
 				Log.d("ACT_MeRepair", "images.get(0):" + images.get(0).getPath());
 				Log.d("ACT_MeRepair", "images:" + images);
 				if (images != null) {
+					iconDelete.setVisibility(View.VISIBLE);
 					Glide.with(ACT_MeRepair.this)
 							.load(images.get(0).getPath())
 							.crossFade()
@@ -273,7 +294,75 @@ public class ACT_MeRepair extends ACT_Network {
 		}
 	}
 
+	/**
+	 * 获取屏幕宽度
+	 * @return
+	 */
+	private int getWidth(){
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		int widthPixels = metrics.widthPixels;
+		int width =(widthPixels*3)/5;
+		return  width;
+	}
+	private void showPop(String str) {
+		View view1 = LayoutInflater.from(ACT_MeRepair.this).inflate(R.layout.pop_style_1b, null);
+		TextView title = (TextView) view1.findViewById(R.id.pop_title);
+		Button btn = (Button) view1.findViewById(R.id.pop_btn);
+		title.setText(str);
+		btn.setText("确定");
 
+		final PopupWindow popupWindow = new PopupWindow(view1, getWidth(),
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		ColorDrawable cd = new ColorDrawable(0x000000);
+		popupWindow.setBackgroundDrawable(cd);
+		WindowManager.LayoutParams lp=getWindow().getAttributes();
+		lp.alpha = 0.4f;
+		getWindow().setAttributes(lp);
+		popupWindow.setFocusable(false);// 取得焦点
+		//注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
+		// 设置允许在外点击消失
+		popupWindow.setOutsideTouchable(false);
+		popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		//点击外部消失
+		//  popupWindow.setOutsideTouchable(true);
+		//设置可以点击
+		popupWindow.setTouchable(true);
+		// 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+		popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		// 软键盘不会挡着popupwindow
+		popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		popupWindow.showAtLocation(view1, Gravity.CENTER, 0, 0);
+		//popupWindow.showAsDropDown(mSubmit);
+		btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				popupWindow.dismiss();
+				finish();
+			}
+		});
+		// 监听菜单的关闭事件
+		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+			@Override
+			public void onDismiss() {
+			}
+		});
+		// 监听触屏事件
+		popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+			public boolean onTouch(View view, MotionEvent event) {
+				return false;
+			}
+		});
+		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+			//在dismiss中恢复透明度
+			public void onDismiss() {
+				WindowManager.LayoutParams lp = getWindow().getAttributes();
+				lp.alpha = 1f;
+				getWindow().setAttributes(lp);
+			}
+		});
+	}
 
 
 

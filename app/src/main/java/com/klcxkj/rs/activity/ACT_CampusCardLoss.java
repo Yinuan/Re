@@ -175,11 +175,11 @@ public class ACT_CampusCardLoss extends ACT_Network {
 	private void showpop() {
 		View view = LayoutInflater.from(ACT_CampusCardLoss.this).inflate(R.layout.pop_style_4, null);
 		final AutoCompleteTextView value = (AutoCompleteTextView) view.findViewById(R.id.pop_4_value);
-		value.setHint("请输入密码");
+		value.setHint("请输入登录密码");
 		Button btn_ok = (Button) view.findViewById(R.id.pop_4_confrim);
 		Button btn_cancle = (Button) view.findViewById(R.id.pop_4_cancle);
 		TextView title = (TextView) view.findViewById(R.id.pop_4_title);
-		title.setText("提示");
+		title.setText("提示: 请输入登录密码");
 		final PopupWindow popupWindow = new PopupWindow(view, getWidth(),
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		ColorDrawable cd = new ColorDrawable(0x000000);

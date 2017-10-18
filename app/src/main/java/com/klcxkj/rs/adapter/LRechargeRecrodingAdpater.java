@@ -60,8 +60,8 @@ public class LRechargeRecrodingAdpater extends MyAdapter<RechargeRecording>{
         //月份
         String serMonth =timeAf.substring(5,7);
         //显示月份
-        String month ="";
-        if (year.equals(curYear)){  //同一年
+        String month =year+"-"+serMonth;
+       /* if (year.equals(curYear)){  //同一年
             if (curMonth.equals(serMonth)){
                 month ="本月";
             }else {
@@ -69,8 +69,8 @@ public class LRechargeRecrodingAdpater extends MyAdapter<RechargeRecording>{
 
             }
         }else {//不是同一年
-            month=year+"年"+serMonth+"月";
-        }
+            month=year+"-"+serMonth;
+        }*/
 
         mon.setText(month);
         timeMon.setText(str);

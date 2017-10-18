@@ -30,6 +30,12 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+/**
+ * author : yinjuan
+ * time： 2017/6/9 13:54
+ * email：yin.juan2016@outlook.com
+ * Description:预充值
+ */
 public class ACT_ApplyCard_Rechge extends ACT_Network {
 
     private TextView content;
@@ -70,7 +76,7 @@ public class ACT_ApplyCard_Rechge extends ACT_Network {
                 params.put("EmployeeID", mCardInfo.getEmployeeID()+"");
                 params.put("CardID", mCardInfo.getCardID()+"");
                 //mCardInfo.getPrefillMoney()+""
-                params.put("totalFee","0.01" );
+                params.put("totalFee",mCardInfo.getPrefillMoney()+"" );
                 params.put("ServerIP", userInfo.getServerIP());
                 params.put("ServerPort", userInfo.getServerPort()+"");
                 sendPostRequest(urlGetAlipayInfor, params);
@@ -160,7 +166,7 @@ public class ACT_ApplyCard_Rechge extends ACT_Network {
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Intent intent = new Intent(getApplicationContext(), ACT_CampusCardApplyRechageReport.class);
-                        intent.putExtra("money", mCardInfo.getPrefillMoney()+"");
+                        intent.putExtra("money", mCardInfo.getPrefillMoney()+"元");
                         intent.putExtra("rechageType","cardGet");
                         startActivity(intent);
                         toast("充值成功");

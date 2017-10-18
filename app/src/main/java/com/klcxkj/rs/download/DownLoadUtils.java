@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
 /**
  * 封装 DownLoadManager 下载
@@ -62,11 +63,12 @@ public class DownLoadUtils {
         downloadRequest.setVisibleInDownloadsUi(true);
         //文件保存位置
         //file:///storage/emulated/0/Android/data/your-package/files/Download/appName.apk
-        downloadRequest.setDestinationInExternalFilesDir(mContext, Environment.DIRECTORY_DOWNLOADS, appName + ".apk");
+        Log.d("DownLoadUtils", Environment.DIRECTORY_DOWNLOADS);
+        downloadRequest.setDestinationInExternalFilesDir(mContext, Environment.DIRECTORY_DOWNLOADS, appName+".apk" );
         // 设置一些基本显示信息
         downloadRequest.setTitle(title);
         downloadRequest.setDescription(description);
-        //req.setMimeType("application/vnd.android.package-archive");
+        downloadRequest.setMimeType("application/vnd.android.package-archive");
         return mDownloadManager.enqueue(downloadRequest);//异步请求
     }
 

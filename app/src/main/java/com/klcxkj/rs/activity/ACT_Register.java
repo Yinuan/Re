@@ -63,6 +63,7 @@ public class ACT_Register extends ACT_Network {
 
 	public static String register_url = RSApplication.BASE_URL + "tStudent/studentRegedit?";
 	private static final String serviceHtml =RSApplication.BASE_URL+"helpFile/serviceRule.html";
+			//RSApplication.BASE_URL+"helpFile/serviceRule.html";
 	String rightCode;
 
 	private Button mButtonSubmit;
@@ -366,9 +367,16 @@ public class ACT_Register extends ACT_Network {
 		if (progress!=null){
 			progress.dismiss();
 		}
-
+		//保存密码
 		AppPreference.getInstance().savePassWord(mEditTextPassword.getText().toString());
-		showpop(getResources().getString(R.string.dialog_content_register_success));
+		toast("注册成功!");
+		Intent intent = new Intent(ACT_Register.this,
+				ACT_Login.class);
+		intent.putExtra("phone", mEditTextPhone
+				.getText().toString());
+		startActivity(intent);
+		finish();
+		//showpop(getResources().getString(R.string.dialog_content_register_success));
 
 	}
 

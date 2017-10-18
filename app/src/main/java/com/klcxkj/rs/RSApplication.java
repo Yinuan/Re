@@ -7,6 +7,7 @@ import com.klcxkj.rs.download.config.SystemParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.tencent.smtt.sdk.QbSdk;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -16,6 +17,7 @@ public class RSApplication extends Application{
 //	public final static String BASE_URL ="http://211.149.224.58:6002/";
 //	http://120.76.155.138:6002
 	public final static String BASE_URL ="http://120.76.155.138:10002/";
+		//"http://120.76.155.138:10002/";
 		//"http://www.china-bzkj.cn:3002/";
 	
 //	public final static String BASE_URL ="http://localhost:8888/RoadStuAppS/";
@@ -36,6 +38,8 @@ public class RSApplication extends Application{
 
 		//下载的缓存初始化
 		SystemParams.init(this);
+        //二维码初始化
+        ZXingLibrary.initDisplayOpinion(this);
 	}
 
 	private void initX5() {

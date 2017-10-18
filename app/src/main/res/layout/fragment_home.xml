@@ -30,16 +30,18 @@
         android:id="@+id/home_top_layout"
         android:background="@color/white"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="36dp">
+        android:layout_height="38dp">
         <TextView
             android:id="@+id/home_message_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textSize="16sp"
             android:textColor="@color/code_get"
+           android:layout_marginRight="45dp"
             android:paddingLeft="12dp"/>
 
 
@@ -70,6 +72,7 @@
             android:layout_weight="1.5">
             <RelativeLayout
                 android:id="@+id/home_card_unbind"
+                android:background="@color/btn_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -122,16 +125,21 @@
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         android:text="--"
-                        android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="6dp"
-                        android:textColor="@color/txt_two"/>
-
+                        android:layout_above="@+id/card_one"
+                        android:layout_marginBottom="3dp"
+                        android:textColor="@color/text_hint_miss"/>
+            <View
+                android:id="@+id/card_one"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"
+                android:background="@color/white"/>
                    <LinearLayout
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
-                       android:layout_alignParentBottom="true"
-                       android:layout_marginBottom="4dp"
+                      android:layout_marginTop="4dp"
+                       android:layout_below="@+id/card_one"
                        android:gravity="center"
                        android:layout_centerHorizontal="true"
                        android:orientation="horizontal">
@@ -159,19 +167,25 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/text_card_monney"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="22sp"
-                        android:layout_marginTop="4dp"
+                       android:layout_marginBottom="3dp"
+                        android:layout_above="@+id/card_two"
                         android:text="--"
                         android:textColor="@color/text_hint_miss"/>
+                    <View
+                        android:id="@+id/card_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/white"/>
                     <TextView
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="4dp"
+                        android:layout_below="@+id/card_two"
+                        android:layout_marginTop="4dp"
                         android:layout_centerHorizontal="true"
                         android:layout_width="match_parent"
                         android:gravity="center"
@@ -189,25 +203,30 @@
                     android:background="@drawable/bg_home_one"
                     android:layout_height="match_parent">
                     <TextView
-                        android:layout_alignParentTop="true"
+                        android:layout_above="@+id/card_three"
                         android:layout_centerVertical="true"
                         android:id="@+id/text_card_monney_remain"
                         android:layout_width="match_parent"
                         android:gravity="center"
                         android:layout_height="wrap_content"
                         android:textSize="22sp"
-                        android:layout_marginTop="4dp"
+                      android:layout_marginBottom="3dp"
                         android:text="--"
                         android:textColor="@color/text_hint_miss"/>
+                    <View
+                        android:id="@+id/card_three"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/white"/>
                     <TextView
-                       android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="4dp"
+                      android:layout_below="@+id/card_three"
                         android:layout_centerHorizontal="true"
                         android:layout_width="match_parent"
                         android:gravity="center"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="4dp"
                         android:text="未领金额(元)"
                         android:textColor="@color/txt_three"/>
                 </RelativeLayout>
@@ -234,11 +253,12 @@
                 android:id="@+id/home_rechange"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-
                 android:layout_weight="1"
+                android:elevation="2dp"
+                android:stateListAnimator="@null"
                 android:background="@drawable/bg_home_two"
                 android:orientation="horizontal">
 
@@ -275,11 +295,12 @@
                 android:id="@+id/home_loss"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-
+                android:elevation="2dp"
+                android:stateListAnimator="@null"
                 android:layout_weight="1"
                 android:background="@drawable/bg_home_three"
                 android:orientation="horizontal">
@@ -318,11 +339,12 @@
                 android:id="@+id/home_add_card"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="10dp"
-
                 android:layout_weight="1"
+                android:elevation="2dp"
+                android:stateListAnimator="@null"
                 android:background="@drawable/bg_home_two"
                 android:orientation="horizontal">
 
@@ -366,10 +388,9 @@
         </View>
 
         <LinearLayout
-
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="6dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -378,23 +399,27 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_back_style"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:layout_alignParentTop="true"
+                  android:layout_above="@+id/card_12"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="4dp"
                     android:src="@mipmap/home_card_myself" />
-
+                <View
+                    android:id="@+id/card_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="6dp"
+                    android:layout_below="@+id/card_12"
                     android:text="自助办卡"
                     android:textColor="@color/txt_two"
                     android:textSize="14sp" />
@@ -405,23 +430,27 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_back_style"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="4dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="6dp"
+                   android:layout_above="@+id/card_11"
                     android:src="@mipmap/home_card_menu" />
-
+                <View
+                    android:id="@+id/card_11"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true"
+                  />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
-                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="6dp"
+                    android:layout_below="@id/card_11"
                     android:text="账单查询"
                     android:textColor="@color/txt_two"
                     android:textSize="14sp" />
@@ -430,7 +459,6 @@
             <RelativeLayout
                 android:id="@+id/layout_message_center"
                 android:layout_width="0dp"
-                android:background="@drawable/btn_back_style"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
@@ -438,21 +466,26 @@
                     android:id="@+id/message_cricle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/message_center"
-                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/card_nine"
                     android:background="@drawable/cricle"
                     android:layout_toRightOf="@+id/message_center_tv"
                     android:layout_toEndOf="@+id/message_center_tv"
                     android:visibility="gone"
                    />
-
+                <View
+                    android:id="@+id/card_nine"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true"
+                    />
                 <ImageView
                     android:id="@+id/message_center"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="6dp"
+                   android:layout_marginBottom="4dp"
+                    android:layout_above="@+id/card_nine"
                     android:src="@mipmap/home_card_message" />
 
                 <TextView
@@ -460,8 +493,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                   android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="4dp"
+                     android:layout_marginTop="6dp"
+                    android:layout_below="@+id/card_nine"
                     android:text="消息中心"
                     android:textColor="@color/txt_two"
                     android:textSize="14sp" />
@@ -481,23 +514,26 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_back_style"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/card_eight"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="4dp"
+                   android:layout_marginBottom="4dp"
                     android:src="@mipmap/home_card_operation" />
-
+                <View
+                    android:id="@+id/card_eight"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                   android:layout_alignParentBottom="true"
+                  android:layout_below="@+id/card_eight"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="6dp"
                     android:text="操作指引"
                     android:textColor="@color/txt_two"
                     android:textSize="14sp" />
@@ -508,23 +544,26 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_back_style"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/card_seven"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="4dp"
                     android:src="@mipmap/home_cardcomplain_" />
-
+                <View
+                    android:id="@+id/card_seven"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
+                   android:layout_marginTop="6dp"
+                    android:layout_below="@+id/card_seven"
                     android:text="领款申诉"
                     android:textColor="@color/txt_two"
                     android:textSize="14sp" />
@@ -535,23 +574,26 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_back_style"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="6dp"
+                  android:layout_above="@+id/card_six"
+                   android:layout_marginBottom="4dp"
                     android:src="@mipmap/home_card_fault_report" />
-
+                <View
+                    android:id="@+id/card_six"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true" />
                 <TextView
+                    android:layout_below="@+id/card_six"
+                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
                     android:text="故障报修"
                     android:textColor="@color/txt_two"
                     android:textSize="14sp" />
@@ -570,23 +612,27 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_back_style"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="6dp"
+                   android:layout_above="@+id/card_five"
+                   android:layout_marginBottom="4dp"
                     android:src="@mipmap/home_card_feedback" />
+                <View
+                    android:id="@+id/card_five"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/card_five"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
+                   android:layout_marginTop="6dp"
                     android:text="意见反馈"
                     android:textColor="@color/txt_two"
                     android:textSize="14sp" />
@@ -597,35 +643,63 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_back_style"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="4dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="4dp"
+                    android:layout_above="@+id/card_four"
                     android:src="@mipmap/home_card_call_us" />
+                <View
+                    android:id="@+id/card_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true" />
 
                 <TextView
+                    android:layout_below="@+id/card_four"
+                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="4dp"
                     android:text="联系我们"
                     android:textColor="@color/txt_two"
                     android:textSize="14sp" />
             </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/home_erweima"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="4dp"
+                    android:layout_above="@+id/card_four_f"
+                    android:src="@mipmap/icon_tcode" />
+                <View
+                    android:id="@+id/card_four_f"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true" />
+
+                <TextView
+                    android:layout_below="@+id/card_four_f"
+                    android:layout_marginTop="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="自助领卡"
+                    android:textColor="@color/txt_two"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
 
         </LinearLayout>
 
@@ -636,7 +710,7 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="32dp">
 
 
     </LinearLayout>

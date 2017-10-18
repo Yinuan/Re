@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.klcxkj.rs"
-    android:versionCode="6"
-    android:versionName="4.01">
+    android:versionCode="7"
+    android:versionName="6.0.1">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -52,7 +52,7 @@
     <application
         android:name=".RSApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/home"
+        android:icon="@mipmap/cantact_us"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
@@ -133,6 +133,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activity.XizaoActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Xizao_CountActivity"
@@ -164,9 +165,12 @@
         <activity
             android:name=".activity.ACT_Html"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.ACT_ApplyCard_Rechge"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ACT_ApplyCard_Rechge"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ACT_TCode"
+            android:screenOrientation="portrait" />
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -283,7 +287,21 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="0222043e6e95f00a79bac109" />
+        <!-- 版本更新的接收器-->
+        <receiver android:name="com.klcxkj.rs.download.ApkInstallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
 
+        <activity android:name="com.klcxkj.boss.activity.Boss_MainUI" />
+        <activity android:name="com.klcxkj.boss.activity.Boss_ProjectManage" />
+        <activity
+            android:name="com.klcxkj.boss.activity.Boss_Consume"
+            android:theme="@style/appcomTheme" />
+        <activity android:name="com.klcxkj.boss.activity.Boss_ProjectDetail" />
+        <activity android:name="com.klcxkj.boss.activity.Boss_BuildingDetail"></activity>
     </application>
 
 </manifest>

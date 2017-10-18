@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.klcxkj.rs.AppPreference;
 import com.klcxkj.rs.RSApplication;
+import com.klcxkj.rs.activity.ACT_MeMessageCenter;
+import com.klcxkj.rs.bean.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -46,18 +49,20 @@ public class MyReceiver extends BroadcastReceiver {
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 				Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知");
-				int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-				Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+			//	int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
+				//Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
 				Logger.d(TAG, "[MyReceiver] 用户点击打开了通知");
-
-				//打开自定义的Activity
-			//	Intent i = new Intent(context, TestActivity.class);
-				//i.putExtras(bundle);
-				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-			//	context.startActivity(i);
+				UserInfo userInfo = AppPreference.getInstance().getUserInfo();
+				if (userInfo !=null){
+					//打开自定义的Activity
+					Intent i = new Intent(context, ACT_MeMessageCenter.class);
+					i.putExtras(bundle);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+					context.startActivity(i);
+				}
 
 			} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
 				Logger.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

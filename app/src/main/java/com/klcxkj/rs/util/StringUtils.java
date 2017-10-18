@@ -67,6 +67,16 @@ public class StringUtils {
 	}
 
 	/**
+	 * 实际替换动作
+	 *
+	 * @param username username
+	 * @param regular  正则
+	 * @return
+	 */
+	private static String replaceAction2(String username, String regular) {
+		return username.replaceAll(regular, "x");
+	}
+	/**
 	 * 身份证号替换，保留前四位和后四位
 	 *
 	 * 如果身份证号为空 或者 null ,返回null ；否则，返回替换后的字符串；
@@ -77,9 +87,9 @@ public class StringUtils {
 	public static String idCardReplaceWithStar(String idCard) {
 
 		if (idCard.isEmpty() || idCard == null) {
-			return null;
+			return "";
 		} else {
-			return replaceAction(idCard, "(?<=\\d{4})\\d(?=\\d{4})");
+			return replaceAction2(idCard, "(?<=\\d{4})\\d(?=\\d{4})");
 		}
 	}
 

@@ -4,6 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.IdRes;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -13,7 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,8 +42,10 @@ import com.klcxkj.rs.activity.ACT_Login;
 import com.klcxkj.rs.activity.ACT_RoomChose;
 import com.klcxkj.rs.bean.UpdatePassResult;
 import com.klcxkj.rs.bean.UserInfo;
+import com.klcxkj.rs.bo.BaseBo;
 import com.klcxkj.rs.bo.CardInfo;
 import com.klcxkj.rs.bo.QINiu;
+import com.klcxkj.rs.util.IDCard;
 import com.klcxkj.rs.widget.CircleImageView;
 import com.klcxkj.rs.wxdemo.GlideImageLoader;
 import com.qiniu.android.common.FixedZone;
@@ -48,10 +61,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * autor:OFFICE-ADMIN
@@ -66,13 +85,14 @@ public class MineFragment extends BaseFragment {
     private CircleImageView myhead_img; //我的头像
     private TextView myTellnumber,mySchool; //我的电话和学校
     private Button button_unbind; //绑定按钮
-    private TextView myName,mySex,myIDCard; //我的姓名，性别，身份证号码
+    private EditText myName,mySex,myIDCard; //我的姓名，性别，身份证号码
     private RelativeLayout myBuildingLine,myRoomLine; //楼栋，宿舍号布局一行
     private TextView myBuilding,myRoom;//楼栋，宿舍号
     private Button mButtonOut; //退出按钮
     private CardInfo mCardInfo; //卡片
     private  UserInfo userInfo;
-
+    private RadioGroup group;
+    private RadioButton maleBtn,femaleBtn;
     private String unbind_url = RSApplication.BASE_URL + "tStudent/cancelBinding?"; //解除绑定
     private String queryCardInfo = RSApplication.BASE_URL + "tStudent/studentGetCardInfo?";  //查询卡片信息
     private static String UPDATE_INFO =RSApplication.BASE_URL + "tStudent/studentUpdateUserInfo?"; //更新个人信息
@@ -80,6 +100,35 @@ public class MineFragment extends BaseFragment {
     private ImagePicker imagePicker;
     private QINiu qiNiu;
     private String QINIU_IMAGE = RSApplication.BASE_URL+"tStudent/getPicToken";//七牛
+
+
+
+    private Handler handler =new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 11:
+                    updateUserInfoToServer();
+                    break;
+                case 12: //验证身份证
+                    String idStr =mCardInfo.getIdentifier();
+                    try {
+                        String idRStr =IDCard.IDCardValidate(idStr);
+                        if (idRStr !=null && idRStr.length()!=0){
+                           // toast(idRStr);
+                            return;
+                        }
+                        //此时才修改身份证信息
+                        updateUserInfoToServer();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+            }
+        }
+    };
     @Override
     protected int getLayoutId() {
         return R.layout.act_me_account;
@@ -92,24 +141,26 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initLayout() {
         initView();
-        bindEvent();
+
         //初始化数据
         initData();
+        bindEvent();
         EventBus.getDefault().register(this);
         imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());
-        Log.d("zzzzzzz", "mineFragmentOnCreate");
-        Log.d("MineFragment", Thread.currentThread().getName());
     }
 
     private void initView() {
+        group = (RadioGroup) mView.findViewById(R.id.mine_sex_gruop);
+        maleBtn = (RadioButton) mView.findViewById(R.id.radio_male);
+        femaleBtn = (RadioButton) mView.findViewById(R.id.radio_female);
         myhead_img = (CircleImageView) mView.findViewById(R.id.mine_img);
         myTellnumber = (TextView) mView.findViewById(R.id.mine_tellnumber);
         mySchool = (TextView) mView.findViewById(R.id.mine_school);
         button_unbind = (Button) mView.findViewById(R.id.button_unbind);
-        myName = (TextView) mView.findViewById(R.id.mine_name);
-        mySex = (TextView) mView.findViewById(R.id.mine_sex);
-        myIDCard = (TextView) mView.findViewById(R.id.mine_idcard);
+        myName = (EditText) mView.findViewById(R.id.mine_name);
+        mySex = (EditText) mView.findViewById(R.id.mine_sex);
+        myIDCard = (EditText) mView.findViewById(R.id.mine_idcard);
         myBuildingLine = (RelativeLayout) mView.findViewById(R.id.mine_building_layout);
         myRoomLine = (RelativeLayout) mView.findViewById(R.id.mine_room_layout);
         myBuilding = (TextView) mView.findViewById(R.id.mine_building_tv);
@@ -122,8 +173,10 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d("MineFragment","activity :"+ "onDestroy");
         EventBus.getDefault().unregister(this);
     }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(String message){
@@ -143,6 +196,7 @@ public class MineFragment extends BaseFragment {
 
         mButtonOut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+              //  mButtonOut.setBackgroundResource(R.drawable.btn_getcode);
                 showPopOut();
 
             }
@@ -212,13 +266,100 @@ public class MineFragment extends BaseFragment {
 
             }
         });
+        myName.setFilters(new InputFilter[] { new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+
+                try {
+                    int len = 0;
+                    boolean more = false;
+                    do {
+                        SpannableStringBuilder builder = new SpannableStringBuilder(
+                                dest).replace(dstart, dend,
+                                source.subSequence(start, end));
+                        len = builder.toString().getBytes("UTF-8").length;
+                        more = len > 30;
+                        if (more) {
+                            end--;
+                            source = source.subSequence(start, end);
+                        }
+                    } while (more);
+                    return source;
+                } catch (UnsupportedEncodingException e) {
+                    return "Exception";
+                }
+            }
+        } });
+
+        //个人信息修改
+        myName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                mCardInfo.setEmployeeName(editable.toString());
+                handler.sendEmptyMessageDelayed(11,3000);
+            }
+        });
+        //性别修改
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int checkId) {
+                RadioButton button = (RadioButton) mView.findViewById(checkId);
+                String str =button.getText().toString();
+                if (str.equals("男")){
+                    mCardInfo.setSexID("1");
+                }else {
+                    mCardInfo.setSexID("0");
+                }
+                handler.sendEmptyMessageDelayed(11,2000);
+            }
+        });
+
+
+        //身份证
+        myIDCard.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Log.d("MineFragment", "afterTextChanged" +editable.toString());
+                if (editable.toString().length() ==15 || editable.toString().length() ==18){
+                    mCardInfo.setIdentifier(editable.toString());
+                  //  updateUserInfoToServer();
+                   handler.sendEmptyMessageDelayed(12,3000);
+                }
+            }
+        });
+
+
     }
+
+
 
     private void initData() {
         userInfo =AppPreference.getInstance().getUserInfo();
         myTellnumber.setText(userInfo.getTelPhone());
         mySchool.setText(userInfo.getPrjName());
-
+        Log.d("MineFragment", "headIconnnnnnnn: "+userInfo.getHeadIcon());
         Glide.with(getActivity())
                 .load(userInfo.getHeadIcon())
                 .crossFade()
@@ -235,16 +376,20 @@ public class MineFragment extends BaseFragment {
                 switch (Integer.valueOf(mCardInfo.getSexID())){
                     case 0:
                         sex="女";
+                        group.check(femaleBtn.getId());
                         break;
                     case 1:
                         sex ="男";
+                        group.check(maleBtn.getId());
                         break;
                 }
                 mySex.setText(sex);
+                //mCardInfo.getIdentifier()
                 myIDCard.setText(mCardInfo.getIdentifier());
                 myBuilding.setText(mCardInfo.getBuildingName());
                 myRoom.setText(mCardInfo.getRoomName());
-
+                myName.setSelection(myName.getText().length());
+                myIDCard.setSelection(myIDCard.getText().length());
 
             }else {
                 loadCardDatasforServer();
@@ -252,10 +397,18 @@ public class MineFragment extends BaseFragment {
         }else {
             //未绑定
             button_unbind.setText("绑定");
+            //变不可编辑
+            myName.setEnabled(false);
+            myIDCard.setEnabled(false);
+            maleBtn.setEnabled(false);
+            femaleBtn.setEnabled(false);
+            myBuildingLine.setEnabled(false);
+            myRoomLine.setEnabled(false);
         }
 
 
     }
+
 
     /**
      * 查询卡片信息
@@ -302,13 +455,23 @@ public class MineFragment extends BaseFragment {
                     EventBus.getDefault().postSticky("cardIsUnbind");
                     mCardInfo =null;
                     button_unbind.setText("绑定");
-                    myName.setText("--");
-                    mySex.setText("--");
-                    myIDCard.setText("--");
                     myBuilding.setText("");
                     myRoom.setText("");
+                    myIDCard.getText().clear();
+                    myName.getText().clear();
+                    group.clearCheck();
+                    //变不可编辑
+                    myName.setEnabled(false);
+                    myIDCard.setEnabled(false);
+                    maleBtn.setEnabled(false);
+                    femaleBtn.setEnabled(false);
+                    myBuildingLine.setEnabled(false);
+                    myRoomLine.setEnabled(false);
+
+                }else {
+                    toast(resp.getMsg());
                 }
-                toast(resp.getMsg());
+                
             }
 
         }else if(url.contains(queryCardInfo)){ //查询卡片信息
@@ -319,9 +482,11 @@ public class MineFragment extends BaseFragment {
             switch (Integer.valueOf(mCardInfo.getSexID())){
                 case 0:
                     sex="女";
+                    group.check(femaleBtn.getId());
                     break;
                 case 1:
                     sex ="男";
+                    group.check(maleBtn.getId());
                     break;
             }
             mySex.setText(sex);
@@ -331,6 +496,14 @@ public class MineFragment extends BaseFragment {
             button_unbind.setText("解除绑定");
             //更新缓存卡片信息
             AppPreference.getInstance().saveCardInfos(mCardInfo);
+            //可变编辑
+            //变不可编辑
+            myName.setEnabled(true);
+            myIDCard.setEnabled(true);
+          maleBtn.setEnabled(true);
+            femaleBtn.setEnabled(true);
+            myBuildingLine.setEnabled(true);
+            myRoomLine.setEnabled(true);
 
         }else if (url.contains(QINIU_IMAGE)){
 
@@ -376,28 +549,40 @@ public class MineFragment extends BaseFragment {
         map.put("headIcon","http://"+headicon);
         Log.d("MineFragment","headicon :" +headicon);
         sendPostRequest(UPDATE_INFO,map);
-        StringBuffer sb =new StringBuffer(UPDATE_INFO);
-        sb.append("TelPhone="+userInfo.getTelPhone());
-        sb.append("&PrjID="+userInfo.getPrjID());
-        sb.append("&EmployeeID="+userInfo.getEmployeeID());
-        sb.append("&EmployeeName="+mCardInfo.getEmployeeName());
-        sb.append("&RoomID="+mCardInfo.getRoomID());
-        sb.append("&SexID="+mCardInfo.getSexID());
-        sb.append("&Identifier="+mCardInfo.getIdentifier());
-        sb.append("&ServerIP="+userInfo.getServerIP());
-        sb.append("&ServerPort="+userInfo.getServerPort());
-        sb.append("&headIcon="+headicon);
-        Log.d("MineFragment", "sb:" + sb);
-
     }
 
+    private void updateUserInfoToServer( ) {
+        HashMap<String,String> map =new HashMap<>();
+        map.put("TelPhone",userInfo.getTelPhone());
+        map.put("PrjID",userInfo.getPrjID()+"");
+        map.put("EmployeeID",mCardInfo.getEmployeeID()+"");
+        map.put("EmployeeName",mCardInfo.getEmployeeName());
+        map.put("RoomID",mCardInfo.getRoomID()+"");
+        map.put("SexID",mCardInfo.getSexID());
+        map.put("Identifier",mCardInfo.getIdentifier());
+        map.put("ServerIP",userInfo.getServerIP());
+        map.put("ServerPort",userInfo.getServerPort()+"");
+        map.put("headIcon",userInfo.getHeadIcon());
+        sendPostRequest(UPDATE_INFO,map);
+
+
+    }
     @Override
     protected void handleResponse(String url, JSONObject json) {
         super.handleResponse(url, json);
-        //保存此图片路径
-        //userInfo.setHeadIcon(images.get(0).getPath());
-       // AppPreference.getInstance().saveLoginUser(userInfo);
+
         Log.d("MineFragment", "json:" + json);
+        Gson gson =new Gson();
+        BaseBo baseBo =gson.fromJson(json.toString(),BaseBo.class);
+        if (baseBo.isSuccess()){
+            //保存此图片路径
+            if (qiuHeadIcon !=null && qiuHeadIcon.length()>0){
+                userInfo.setHeadIcon("http://"+qiuHeadIcon);
+                AppPreference.getInstance().saveLoginUser(userInfo);
+            }
+            AppPreference.getInstance().saveCardInfos(mCardInfo);
+
+        }
     }
 
 
@@ -484,15 +669,15 @@ public class MineFragment extends BaseFragment {
         });
     }
     private void showPopOut() {
-        View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.pop_style_2, null);
+        View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.pop_style_2b, null);
         TextView title = (TextView) view1.findViewById(R.id.pop_title);
         TextView content = (TextView) view1.findViewById(R.id.pop_content);
         Button btn_ok = (Button) view1.findViewById(R.id.pop_btn_confrim);
         Button btn_cacle = (Button) view1.findViewById(R.id.pop_btn_cancle);
         title.setText("提示");
         content.setText(getResources().getString(R.string.dialog_content_out_confirm));
-        btn_ok.setText("确定");
-        btn_cacle.setText("取消");
+        btn_ok.setText("取消");
+        btn_cacle.setText("确定");
 
         final PopupWindow popupWindow = new PopupWindow(view1, getWidth(),
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -516,18 +701,21 @@ public class MineFragment extends BaseFragment {
         popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popupWindow.showAtLocation(view1, Gravity.CENTER, 0, 0);
         //popupWindow.showAsDropDown(mSubmit);
-        btn_cacle.setOnClickListener(new View.OnClickListener() {
+        btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
             }
         });
-        btn_ok.setOnClickListener(new View.OnClickListener() {
+        btn_cacle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
                 AppPreference.getInstance().deleteLoginUser();
                 AppPreference.getInstance().deleteCardInfo();
+                //注销极光推送
+                Set<String> set =new HashSet<String>();
+                JPushInterface.setAliasAndTags(getActivity(),"",set,null);
                 Intent intent = new Intent();
                 intent.setClass(getActivity(),
                         ACT_Login.class); // B为你按退出按钮所在的activity
@@ -582,8 +770,8 @@ public class MineFragment extends BaseFragment {
                             .error(R.mipmap.icon_defult)
                             .into(myhead_img);
                     //保存此图片路径
-                    userInfo.setHeadIcon(images.get(0).getPath());
-                    AppPreference.getInstance().saveLoginUser(userInfo);
+                   // userInfo.setHeadIcon(images.get(0).getPath());
+                  //  AppPreference.getInstance().saveLoginUser(userInfo);
                     //上传骑牛服务器
                     StringBuffer sb=new StringBuffer(QINIU_IMAGE);
                     sendGetRequest(sb.toString());
@@ -625,11 +813,14 @@ public class MineFragment extends BaseFragment {
                 if (info.isOK()){
                     Log.d("ACT_Network","url..=:"+ key);
                     //修改个人信息
-                    updateUserInfoToServer(qiNiu.getDomainName()+fileName);
+                    qiuHeadIcon =qiNiu.getDomainName()+fileName;
+                    updateUserInfoToServer(qiuHeadIcon);
                 }
 
             }
         },null);
 
     }
+
+    private String qiuHeadIcon;   //头像
 }

@@ -1,6 +1,7 @@
 package com.klcxkj.rs.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -37,11 +38,12 @@ public class LMessageListAdapter  extends MyAdapter<MessageBean>{
         TextView time =ViewHolder.get(view,R.id.text_content);
         MessageBean message =getItem(position);
         //头像
+        Log.d("LMessageListAdapter", message.getIconUrl());
         Glide.with(mContext)
                 .load(message.getIconUrl())
                 .crossFade()
                 .dontAnimate()//第一次加载图片
-                .error(R.mipmap.add_imagepicker)
+                .error(R.mipmap.home_klcxkj)
                 .into(headIcon);
         //文字
         title.setText(message.getRepTitle());

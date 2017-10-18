@@ -162,7 +162,6 @@ public class ACT_RoomChose extends ACT_Network {
         map.put("headIcon",userinfo.getHeadIcon());
         Log.d("ACT_RoomChose", "map:" + map);
         sendPostRequest(UPDATE_INFO,map);
-
     }
 
     /**

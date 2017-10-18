@@ -54,7 +54,7 @@
 
             <Button
                 android:id="@+id/pop_btn_confrim"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/btn_text"
                 android:text="立即解绑"
                 android:layout_marginLeft="10dp"
@@ -66,7 +66,7 @@
 
             <Button
                 android:id="@+id/pop_btn_cancle"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/code_get"
                 android:text="再看看先"
                 android:layout_marginLeft="5dp"

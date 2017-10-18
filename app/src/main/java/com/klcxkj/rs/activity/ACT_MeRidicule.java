@@ -1,11 +1,21 @@
 package com.klcxkj.rs.activity;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
@@ -92,8 +102,9 @@ public class ACT_MeRidicule extends ACT_Network{
 		progress.dismiss();
 		BaseBo result = new Gson().fromJson(json.toString(), BaseBo.class);
 		if(result.isSuccess()){
-			toast(result.getMsg());
-			finish();
+			//toast(result.getMsg());
+			//finish();
+			showPop("感谢你宝贵的意见~");
 		}else{
 			toast(R.string.operate_error);
 		}
@@ -107,4 +118,74 @@ public class ACT_MeRidicule extends ACT_Network{
 	protected void loadDatas() {}	
 	@Override
 	protected void loadError(JSONObject result) {}
+
+	/**
+	 * 获取屏幕宽度
+	 * @return
+	 */
+	private int getWidth(){
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		int widthPixels = metrics.widthPixels;
+		int width =(widthPixels*3)/5;
+		return  width;
+	}
+	private void showPop(String str) {
+		View view1 = LayoutInflater.from(ACT_MeRidicule.this).inflate(R.layout.pop_style_1b, null);
+		TextView title = (TextView) view1.findViewById(R.id.pop_title);
+		Button btn = (Button) view1.findViewById(R.id.pop_btn);
+		title.setText(str);
+		btn.setText("确定");
+
+		final PopupWindow popupWindow = new PopupWindow(view1, getWidth(),
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		ColorDrawable cd = new ColorDrawable(0x000000);
+		popupWindow.setBackgroundDrawable(cd);
+		WindowManager.LayoutParams lp=getWindow().getAttributes();
+		lp.alpha = 0.4f;
+		getWindow().setAttributes(lp);
+		popupWindow.setFocusable(false);// 取得焦点
+		//注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
+		// 设置允许在外点击消失
+		popupWindow.setOutsideTouchable(false);
+		popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		//点击外部消失
+		//  popupWindow.setOutsideTouchable(true);
+		//设置可以点击
+		popupWindow.setTouchable(true);
+		// 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+		popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		// 软键盘不会挡着popupwindow
+		popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		popupWindow.showAtLocation(view1, Gravity.CENTER, 0, 0);
+		//popupWindow.showAsDropDown(mSubmit);
+		btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				popupWindow.dismiss();
+				finish();
+			}
+		});
+		// 监听菜单的关闭事件
+		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+			@Override
+			public void onDismiss() {
+			}
+		});
+		// 监听触屏事件
+		popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+			public boolean onTouch(View view, MotionEvent event) {
+				return false;
+			}
+		});
+		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+			//在dismiss中恢复透明度
+			public void onDismiss() {
+				WindowManager.LayoutParams lp = getWindow().getAttributes();
+				lp.alpha = 1f;
+				getWindow().setAttributes(lp);
+			}
+		});
+	}
 }

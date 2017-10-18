@@ -1,7 +1,9 @@
 package com.klcxkj.rs.fragment;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.klcxkj.rs.R;
@@ -18,8 +20,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.klcxkj.rs.R.id.refreshLayout;
 
 /**
  * autor:OFFICE-ADMIN
@@ -38,6 +38,7 @@ public class RechargeFragment extends BaseFragment {
     private List<RechargeRecording> mDatas =new ArrayList<>();//数据源
     private List<RechargeRecording> listDatas =new ArrayList<>();//分页加载的数据
     private RechargeRecrodingResult recrodingResult;  //解析实体类
+    private RelativeLayout layout_null;  //无数据视图
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_rechanger;
@@ -45,7 +46,6 @@ public class RechargeFragment extends BaseFragment {
 
     @Override
     protected void initLayout() {
-        Log.d("kkkkkkkkkkk", "RechargeFragment:"+"oncreate");
         initview();
         initdata();
         bindview();
@@ -55,12 +55,14 @@ public class RechargeFragment extends BaseFragment {
 
 
     private void initview() {
+        layout_null = (RelativeLayout) mView.findViewById(R.id.data_null);
         rechargeListView = (ListView) mView.findViewById(R.id.listView_rechager);
         smartRefreshLayout = (SmartRefreshLayout) mView.findViewById(R.id.refreshLayout);
         rAdpater =new LRechargeRecrodingAdpater(getActivity());
         rAdpater.setList(listDatas);
+        //湖湘瀚林初相遇，一见陈静误终身
         rechargeListView.setAdapter(rAdpater);
-
+        smartRefreshLayout.setEnableLoadmore(false);
 
 
     }
@@ -68,6 +70,11 @@ public class RechargeFragment extends BaseFragment {
     private void initdata() {
         if (recrodingResult ==null){
             loadBillFromServer();
+        }else {
+            if (recrodingResult.getObj() ==null || recrodingResult.getObj().size()==0){
+                smartRefreshLayout.setVisibility(View.GONE);
+                layout_null.setVisibility(View.VISIBLE);
+            }
         }
 
 
@@ -80,7 +87,6 @@ public class RechargeFragment extends BaseFragment {
                 listDatas =new ArrayList<>();
                 mDatas =new ArrayList<>();
                 maxCount=20;
-                smartRefreshLayout.setEnableLoadmore(true);
                 loadBillFromServer();
             }
         });
@@ -92,14 +98,10 @@ public class RechargeFragment extends BaseFragment {
                   @Override
                   public void run() {
                       if (mDatas.size()-listDatas.size()<=20 ){//20-40
-                          if (mDatas.size()==listDatas.size()){
-                              //不在上拉
-                              smartRefreshLayout.setEnableLoadmore(false);
-                          }else {
-                              for (int i = maxCount; i <mDatas.size() ; i++) {
-                                  listDatas.add(mDatas.get(i));
-                              }
-
+                          //不在上拉
+                          smartRefreshLayout.setEnableLoadmore(false);
+                          for (int i = maxCount; i <mDatas.size() ; i++) {
+                              listDatas.add(mDatas.get(i));
                           }
 
                       }else { //40
@@ -111,7 +113,7 @@ public class RechargeFragment extends BaseFragment {
                       }
 
                   }
-              },1950);
+              },1850);
 
             }
         });
@@ -138,6 +140,7 @@ public class RechargeFragment extends BaseFragment {
     @Override
     protected int parseJson(JSONObject result, String url) throws JSONException {
         Gson gson =new Gson();
+        Log.d("RechargeFragment", "result:" + result);
         recrodingResult =gson.fromJson(result.toString(),RechargeRecrodingResult.class);
         return 0;
     }
@@ -145,7 +148,7 @@ public class RechargeFragment extends BaseFragment {
     @Override
     protected void loadDatas() {
 
-        if (recrodingResult.getObj() !=null){
+        if (recrodingResult.getObj() !=null && recrodingResult.getObj().size()>0){
             mDatas.addAll(recrodingResult.getObj());
           /*  for (int i = 0; i <100 ; i++) {
                 mDatas.add(new RechargeRecording("2017-09-05 20:26:34.0",100.5+i,"充值"));
@@ -154,11 +157,17 @@ public class RechargeFragment extends BaseFragment {
                 for (int i = 0; i <20 ; i++) {
                     listDatas.add(mDatas.get(i));
                 }
+                //大于20条数据的时候，开放下拉刷新
+                smartRefreshLayout.setEnableLoadmore(true);
             }else {
                 listDatas.addAll(mDatas);
             }
+            rAdpater.setList(listDatas);
             rAdpater.notifyDataSetChanged();
 
+        }else {
+            smartRefreshLayout.setVisibility(View.GONE);
+            layout_null.setVisibility(View.VISIBLE);
         }
     }
 

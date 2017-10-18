@@ -1,7 +1,9 @@
 package com.klcxkj.rs.fragment;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.klcxkj.rs.R;
@@ -41,6 +43,7 @@ public class TransferFragment extends BaseFragment {
     private RechargeRecrodingResult recrodingResult;  //解析实体类
     private ListView transferListview;
     private LoadingDialogProgress progress;
+    private RelativeLayout layout_null;  //无数据视图
     @Override
     protected int getLayoutId() {
         return R.layout.act_campus_card_bill;
@@ -57,18 +60,24 @@ public class TransferFragment extends BaseFragment {
 
 
     private void initview() {
+        layout_null = (RelativeLayout) mView.findViewById(R.id.data_null);
         transferListview = (ListView) mView.findViewById(R.id.listView_transfer);
-        smartRefreshLayout = (SmartRefreshLayout) mView.findViewById(R.id.refreshLayout);
+        smartRefreshLayout = (SmartRefreshLayout) mView.findViewById(refreshLayout);
         rAdpater =new LRechargeRecrodingAdpater(getActivity());
         rAdpater.setList(listDatas);
         transferListview.setAdapter(rAdpater);
-
+        smartRefreshLayout.setEnableLoadmore(false);
     }
 
     private void initdata() {
         if (recrodingResult ==null){
             progress= GlobalTools.getInstance().showDailog(getActivity(),"加载");
             loadBillFromServer();
+        }else {
+            if (recrodingResult.getObj() ==null || recrodingResult.getObj().size()==0){
+                smartRefreshLayout.setVisibility(View.GONE);
+                layout_null.setVisibility(View.VISIBLE);
+            }
         }
 
 
@@ -92,7 +101,6 @@ public class TransferFragment extends BaseFragment {
                 listDatas =new ArrayList<>();
                 mDatas =new ArrayList<>();
                 maxCount=20;
-                smartRefreshLayout.setEnableLoadmore(true);
                 loadBillFromServer();
             }
         });
@@ -104,13 +112,10 @@ public class TransferFragment extends BaseFragment {
                    @Override
                    public void run() {
                        if (mDatas.size()-listDatas.size()<=20 ){//20-40
-                           if (mDatas.size()==listDatas.size()){
-                               //不在上拉
-                               smartRefreshLayout.setEnableLoadmore(false);
-                           }else {
-                               for (int i = maxCount; i <mDatas.size() ; i++) {
-                                   listDatas.add(mDatas.get(i));
-                               }
+                           //不在上拉
+                           smartRefreshLayout.setEnableLoadmore(false);
+                           for (int i = maxCount; i <mDatas.size() ; i++) {
+                               listDatas.add(mDatas.get(i));
                            }
 
                        }else { //40
@@ -121,7 +126,7 @@ public class TransferFragment extends BaseFragment {
                        }
                        rAdpater.notifyDataSetChanged();
                    }
-               },1950);
+               },1850);
 
             }
         });
@@ -144,32 +149,23 @@ public class TransferFragment extends BaseFragment {
     @Override
     protected void loadDatas() {
         progress.dismiss();
-        if (recrodingResult.getObj() !=null){
+        if (recrodingResult.getObj() !=null && recrodingResult.getObj().size()>0){
            mDatas.addAll(recrodingResult.getObj());
-           /* for (int i = 0; i <10 ; i++) {
-                mDatas.add(new RechargeRecording("2017-09-05 20:26:34.0",1000.5+i,"转账"));
-            }
-            for (int i = 0; i <10 ; i++) {
-                mDatas.add(new RechargeRecording("2017-08-05 20:26:34.0",1000.5+i,"转账"));
-            }
-            for (int i = 0; i <10 ; i++) {
-                mDatas.add(new RechargeRecording("2017-07-05 20:26:34.0",1000.5+i,"转账"));
-            }
-            for (int i = 0; i <10 ; i++) {
-                mDatas.add(new RechargeRecording("2016-09-05 20:26:34.0",1000.5+i,"转账"));
-            }
-            for (int i = 0; i <10 ; i++) {
-                mDatas.add(new RechargeRecording("2015-09-05 20:26:34.0",1000.5+i,"转账"));
-            }*/
             if (mDatas.size()>20){
                 for (int i = 0; i <20 ; i++) {
                     listDatas.add(mDatas.get(i));
                 }
+                //大于20条数据的时候，开放下拉刷新
+                smartRefreshLayout.setEnableLoadmore(true);
             }else {
                 listDatas.addAll(mDatas);
             }
+            rAdpater.setList(listDatas);
             rAdpater.notifyDataSetChanged();
 
+        }else {
+            smartRefreshLayout.setVisibility(View.GONE);
+            layout_null.setVisibility(View.VISIBLE);
         }
 
     }

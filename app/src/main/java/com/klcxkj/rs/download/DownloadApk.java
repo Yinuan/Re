@@ -43,13 +43,16 @@ public class DownloadApk {
             DownLoadUtils downLoadUtils = DownLoadUtils.getInstance(context);
             //获取当前状态
             int status = downLoadUtils.getDownloadStatus(downloadId);
+            Log.d("DownloadApk", "status:" + status);
             if(DownloadManager.STATUS_SUCCESSFUL == status) {
                 //状态为下载成功
                 //获取下载路径URI
                 Uri downloadUri = downLoadUtils.getDownloadUri(downloadId);
+                Log.d("DownloadApk", "downloadUri:" + downloadUri.getPath());
+                File file = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/Re.apk");
                 if(null != downloadUri) {
                     //存在下载的APK，如果两个APK相同，启动更新界面。否之则删除，重新下载。
-                    if(compare(getApkInfo(context,downloadUri.getPath()),context)) {
+                    if(compare(getApkInfo(context,file.getPath()),context)) {
                         startInstall(context, downloadUri);
                         return;
                     } else {
@@ -57,15 +60,16 @@ public class DownloadApk {
                         downLoadUtils.getDownloadManager().remove(downloadId);
                     }
                 }
-                start(context, url, title,appName);
+               // start(context, url, title,appName);
             } else if(DownloadManager.STATUS_FAILED == status) {
                 //下载失败,重新下载
                 start(context, url, title,appName);
             }else {
-                Log.d(context.getPackageName(), "apk is already downloading");
+                Log.d("DownloadApk", "apk is already downloading");
             }
         } else {
             //不存在downloadId，没有下载过APK
+            Toast.makeText(context,"下载已开始，您可以点击查看当前下载进度条",Toast.LENGTH_SHORT).show();
             start(context, url, title,appName);
         }
     }
@@ -105,11 +109,18 @@ public class DownloadApk {
      * @param uri
      */
     private static void startInstall(Context context, Uri uri) {
+        Uri downloadUri;
+        File file = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/Re.apk");
+        if (file !=null){
+            String path = file.getAbsolutePath();
+            downloadUri = Uri.parse("file://" + path);
+            SystemParams.getInstance().setString("downloadApk",path);
+            Intent install= new Intent(Intent.ACTION_VIEW);
+            install.setDataAndType(downloadUri, "application/vnd.android.package-archive");
+            install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(install);
+        }
 
-        Intent install = new Intent(Intent.ACTION_VIEW);
-        install.setDataAndType(uri, "application/vnd.android.package-archive");
-        install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(install);
     }
 
 
@@ -146,6 +157,8 @@ public class DownloadApk {
             try {
                 PackageInfo packageInfo = context.getPackageManager().getPackageInfo(localPackageName, 0);
                 //比较当前APK和下载的APK版本号
+                Log.d("DownloadApk", "apkInfo.versionCode:" + apkInfo.versionCode);
+                Log.d("DownloadApk", "packageInfo.versionCode:" + packageInfo.versionCode);
                 if (apkInfo.versionCode > packageInfo.versionCode) {
                     //如果下载的APK版本号大于当前安装的APK版本号，返回true
                     return true;

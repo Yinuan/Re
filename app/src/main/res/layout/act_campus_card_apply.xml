@@ -34,7 +34,7 @@
 				android:layout_toRightOf="@+id/campus_Card_name"
 	            android:id="@+id/apply_name"
 				android:layout_centerVertical="true"
-		        android:textColor="@color/hint"
+		        android:textColor="@color/txt_two"
 		        android:hint="@string/hint_name"
 		        style="@style/input_fullline_bg_while"/>
 	        <TextView
@@ -104,10 +104,11 @@
 	        <EditText
 				android:layout_toRightOf="@+id/campus_card_ID"
 	            android:id="@+id/apply_IDCard"
-		        android:textColor="@color/hint"
+		        android:textColor="@color/txt_two"
 				android:maxLength="18"
 				android:layout_centerVertical="true"
-		        android:digits="0123456789abcdefghigklmnopqrstuvwxyz"
+                android:inputType="number"
+                android:digits="0123456789xyzXYZ"
 		        android:hint="@string/my_change_myinfo_hint"
 		        style="@style/input_fullline_bg_while"/>
 	        <TextView
@@ -151,7 +152,7 @@
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
 			android:layout_marginLeft="12dp"
-			android:textColor="@color/txt_three"
+			android:textColor="@color/txt_two"
 			android:textSize="16sp" />
 
 		<ImageView
@@ -189,7 +190,7 @@
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
 			android:layout_marginLeft="12dp"
-			android:textColor="@color/txt_three"
+			android:textColor="@color/txt_two"
 			android:textSize="16sp" />
 
 		<ImageView

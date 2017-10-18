@@ -19,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.klcxkj.imagepicker.ImagePicker;
@@ -29,11 +27,12 @@ import com.klcxkj.imagepicker.ui.ImageGridActivity;
 import com.klcxkj.rs.AppPreference;
 import com.klcxkj.rs.R;
 import com.klcxkj.rs.RSApplication;
-import com.klcxkj.rs.bean.UpdatePassResult;
 import com.klcxkj.rs.bean.UserInfo;
+import com.klcxkj.rs.bo.BaseBo;
 import com.klcxkj.rs.bo.CardInfo;
 import com.klcxkj.rs.bo.QINiu;
 import com.klcxkj.rs.util.GlobalTools;
+import com.klcxkj.rs.widget.CircleImageView;
 import com.klcxkj.rs.widget.LoadingDialogProgress;
 import com.klcxkj.rs.wxdemo.GlideImageLoader;
 
@@ -43,7 +42,6 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * author : yinjuan
@@ -58,7 +56,7 @@ public class ACT_MonneyComplaints extends ACT_Network {
     private ImageView mImg; //图片
     private Button mBtn;
     private LoadingDialogProgress progress;
-
+    private CircleImageView iconDelete;
     private String QINIU_IMAGE = RSApplication.BASE_URL+"tStudent/getPicToken";//七牛
 
     private static final String MOONNEY_COMPLAINT = RSApplication.BASE_URL+"tStudent/getMoneyApply?";
@@ -96,6 +94,7 @@ public class ACT_MonneyComplaints extends ACT_Network {
         mName = (TextView) findViewById(R.id.monney_name);
         mNum = (EditText) findViewById(R.id.monney_num);
         mBtn = (Button) findViewById(R.id.monney_btn);
+        iconDelete = (CircleImageView) findViewById(R.id.delete_icon);
         mNum.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
 }
 
@@ -122,8 +121,9 @@ public class ACT_MonneyComplaints extends ACT_Network {
                     toast("请填写申诉金额");
                     return;
                 }
+                mBtn.setEnabled(false);
                 //上传图片
-                if (images !=null){
+                if (images !=null && images.size()>0){
                     StringBuffer sb=new StringBuffer(QINIU_IMAGE);
                     sendGetRequest(sb.toString());
                 }else {
@@ -132,6 +132,18 @@ public class ACT_MonneyComplaints extends ACT_Network {
                progress = GlobalTools.getInstance().showDailog(ACT_MonneyComplaints.this,"提交..");
 
 
+            }
+        });
+        iconDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (images==null){
+                    iconDelete.setVisibility(View.GONE);
+                    return;
+                }
+                iconDelete.setVisibility(View.GONE);
+                images.clear();
+                mImg.setImageResource(R.mipmap.add_imagepicker);
             }
         });
     }
@@ -143,71 +155,69 @@ public class ACT_MonneyComplaints extends ACT_Network {
         UserInfo user =AppPreference.getInstance().getUserInfo();
         CardInfo card =AppPreference.getInstance().getCardInfo();
 
-        HashMap<String,String> map =new HashMap<>();
-        map.put("PrjID",user.getPrjID()+"");
-        map.put("TelPhone",user.getTelPhone());
-        map.put("EmployeeID",card.getEmployeeName());
-        map.put("CardID",card.getCardID()+"");
-        map.put("applyMoney",mNum.getText().toString());
-        map.put("ServerIP",user.getServerIP());
-        map.put("ServerPort",user.getServerPort()+"");
-        map.put("applyImg",reportImg);
-        sendPostRequest(MOONNEY_COMPLAINT,map);
+        StringBuffer sb =new StringBuffer(MOONNEY_COMPLAINT);
+        sb.append("PrjID="+user.getPrjID());
+        sb.append("&TelPhone="+user.getTelPhone());
+        sb.append("&EmployeeID="+card.getEmployeeID());
+        sb.append("&CardID="+card.getCardID());
+        sb.append("&applyMoney="+mNum.getText().toString());
+        sb.append("&ServerIP="+user.getServerIP());
+        sb.append("&ServerPort="+user.getServerPort());
+        sb.append("&applyImg="+reportImg);
+        Log.d("ACT_MonneyComplaints", "sb:" + sb);
+        sendGetRequest(sb.toString());
+
 
     }
 
-    @Override
-    protected void handleResponse(String url, JSONObject json) {
-        super.handleResponse(url, json);
-        progress.dismiss();
-        Gson gson =new Gson();
-        UpdatePassResult result =gson.fromJson(json.toString(),UpdatePassResult.class);
-        if (result.getSuccess().equals("true")){
-            toast(result.getMsg());
-            showPop();
-        }else {
-            toast(result.getMsg());
-        }
 
-    }
-
-    @Override
-    protected void handleErrorResponse(String url, VolleyError error) {
-        super.handleErrorResponse(url, error);
-        progress.dismiss();
-        if (error instanceof TimeoutError) {
-            toast(R.string.timeout_error);
-        } else {
-            toast(R.string.operate_error);
-        }
-    }
 
     @Override
     protected int parseJson(JSONObject result, String url) throws JSONException {
         Log.d("ACT_MonneyComplaints", "result:" + result);
         Gson gson =new Gson();
-        qiNiu =gson.fromJson(result.toString(),QINiu.class);
+        if (url.contains(QINIU_IMAGE)){
+            qiNiu =gson.fromJson(result.toString(),QINiu.class);
+            //上传图片
+            if (qiNiu.getToken() !=null){
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+                String pathName = df.format(new Date());
+                String reportImg =upLoadImage(images.get(0).getPath(),qiNiu.getToken(),pathName);
+                Log.d("ACT_MeRepair","reportImg:=="+reportImg);
+                submitMonneyComplaintToServer(qiNiu.getDomainName()+pathName);
+            }else {
+                submitMonneyComplaintToServer("");
+            }
+        }else if (url.contains(MOONNEY_COMPLAINT)){
+            BaseBo baseBo =gson.fromJson(result.toString(),BaseBo.class);
+            if (baseBo.isSuccess()){
+                toast(baseBo.getMsg());
+                showPop();
+            }else {
+                toast(baseBo.getMsg());
+
+            }
+        }
+
+
         return 0;
     }
 
     @Override
     protected void loadDatas() {
-        //上传图片
-        if (qiNiu.getToken() !=null){
-            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-            String pathName = df.format(new Date());
-            String reportImg =upLoadImage(images.get(0).getPath(),qiNiu.getToken(),pathName);
-            Log.d("ACT_MeRepair","reportImg:=="+reportImg);
-            submitMonneyComplaintToServer(qiNiu.getDomainName()+pathName);
-        }else {
-            submitMonneyComplaintToServer("");
-        }
+            if (progress!=null){
+                progress.dismiss();
+            }
 
     }
 
     @Override
     protected void loadError(JSONObject result) {
-       progress.dismiss();
+        if (progress!=null){
+            progress.dismiss();
+        }
+        mBtn.setEnabled(true);
+
     }
 
     ArrayList<ImageItem> images = null;
@@ -223,6 +233,7 @@ public class ACT_MonneyComplaints extends ACT_Network {
                 images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 Log.d("ACT_MonneyComplaints", "images:" + images);
                 if (images != null) {
+                    iconDelete.setVisibility(View.VISIBLE);
                     Glide.with(ACT_MonneyComplaints.this)
                             .load(images.get(0).getPath())
                             .crossFade()

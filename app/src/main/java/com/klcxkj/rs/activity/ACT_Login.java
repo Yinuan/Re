@@ -190,6 +190,7 @@ public class ACT_Login extends ACT_Network {
 		builder.developerArg0 = "developerArg2";
 		JPushInterface.setPushNotificationBuilder(2, builder);
 
+
 	}
 
 	/**

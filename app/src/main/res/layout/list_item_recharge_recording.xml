@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:background="@color/bg_view"
         android:gravity="center_vertical"
-        android:layout_height="36dp">
+        android:layout_height="40dp">
         <TextView
             android:id="@+id/item_recording_month"
             android:layout_width="wrap_content"

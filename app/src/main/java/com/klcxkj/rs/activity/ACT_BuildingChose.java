@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.klcxkj.boss.activity.Boss_BuildingDetail;
 import com.klcxkj.rs.R;
 import com.klcxkj.rs.RSApplication;
 import com.klcxkj.rs.adapter.LRoomAdpater;
@@ -97,6 +98,9 @@ public class ACT_BuildingChose extends ACT_Network  {
         roomAddress = (TextView) findViewById(R.id.room_address);
         listView = (ListView) findViewById(R.id.list_room);
         if (buildName!=null){
+            if (buildName.equals("noBuildName")){
+                roomAddress.setVisibility(View.GONE);
+            }
             roomAddress.setText("当前: "+buildName);
         }else {
             roomAddress.setText("当前:");
@@ -141,13 +145,22 @@ public class ACT_BuildingChose extends ACT_Network  {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //跳转到房间号选择
-                Intent intent =new Intent(ACT_BuildingChose.this,ACT_RoomChose.class);
-                Log.d("ACT_BuildingChose", buildDatas.get(position).getBuildingID());
-                intent.putExtra("type",cType);
-                intent.putExtra("buildingID",buildDatas.get(position).getBuildingID());
-                intent.putExtra("buildingName",buildDatas.get(position).getBuildingName());
-                startActivity(intent);
+                if (cType.equals("boss")){
+                    //跳转到房间号选择
+                    Intent intent =new Intent(ACT_BuildingChose.this,Boss_BuildingDetail.class);
+                    intent.putExtra("buildingID",buildDatas.get(position).getBuildingID());
+                    intent.putExtra("buildingName",buildDatas.get(position).getBuildingName());
+                    startActivity(intent);
+                }else {
+                    //跳转到房间号选择
+                    Intent intent =new Intent(ACT_BuildingChose.this,ACT_RoomChose.class);
+                    Log.d("ACT_BuildingChose", buildDatas.get(position).getBuildingID());
+                    intent.putExtra("type",cType);
+                    intent.putExtra("buildingID",buildDatas.get(position).getBuildingID());
+                    intent.putExtra("buildingName",buildDatas.get(position).getBuildingName());
+                    startActivity(intent);
+                }
+
             }
         });
     }

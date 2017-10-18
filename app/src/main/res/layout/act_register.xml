@@ -183,8 +183,6 @@
 				android:background="@drawable/btn_getcode"
 				android:clickable="true"
 				android:gravity="center"
-				android:elevation="10dp"
-				android:stateListAnimator="@null"
 				android:text="@string/get_verification"
 				android:textColor="@color/btn_text"
 				android:textSize="16sp" />

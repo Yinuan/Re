@@ -5,10 +5,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.klcxkj.rs.download.config.SystemParams;
+
+import java.io.File;
 
 
 /**
@@ -37,9 +40,12 @@ public class ApkInstallReceiver extends BroadcastReceiver {
         long downId = SystemParams.getInstance().getLong(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
         if(downloadId == downId) {
             DownloadManager downManager= (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-            Uri downloadUri = downManager.getUriForDownloadedFile(downloadId);
-            SystemParams.getInstance().setString("downloadApk",downloadUri.getPath());
-            if (downloadUri != null) {
+            Uri downloadUri;
+            File file = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS + "/Re.apk");
+            if (file !=null){
+                String path = file.getAbsolutePath();
+                downloadUri = Uri.parse("file://" + path);
+                SystemParams.getInstance().setString("downloadApk",path);
                 Intent install= new Intent(Intent.ACTION_VIEW);
                 install.setDataAndType(downloadUri, "application/vnd.android.package-archive");
                 install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -47,6 +53,8 @@ public class ApkInstallReceiver extends BroadcastReceiver {
             } else {
                 Toast.makeText(context, "下载失败", Toast.LENGTH_SHORT).show();
             }
+
+
         }
     }
 }

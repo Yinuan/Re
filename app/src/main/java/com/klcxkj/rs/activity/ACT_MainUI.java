@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -106,18 +108,26 @@ public class ACT_MainUI extends FragmentActivity implements View.OnClickListener
             case 0:
                 getcheck(true,false);
                 String schoolName =userInfo.getPrjName();
-                /*int len =schoolName.length();
-                if (len>14 && len<20 ){
-                    top_menu_title.setTextSize(getResources().getDimension(R.dimen.txt_two));
-                }else if (len<=10){
-                    top_menu_title.setTextSize(getResources().getDimension(R.dimen.txt_one));
-                }else if (len>=20 && len<28){
-                    top_menu_title.setTextSize(getResources().getDimension(R.dimen.txt_four));
-                }else if (len>=28){
-                    top_menu_title.setTextSize(getResources().getDimension(R.dimen.txt_five));
-                    top_menu_title.setEllipsize(TextUtils.TruncateAt.valueOf("END"));
+               // String schoolName ="中国人民解放军防化指挥工程学院挥工程学院挥";
+                /**
+                 * 0-18  20
+                 * 19-20  18
+                 * 21-23 16
+                 * 24-30 14
+                 */
 
-                }*/
+                int length =schoolName.length();
+                Log.d("ACT_MainUI", "length:" + length);
+                if (length>0 && length<=18){
+                    top_menu_title.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+                }else if (length>18 && length<=22 ){
+                    top_menu_title.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                }else if (length>22 && length<=25){
+                    top_menu_title.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+                }else if (length>25){
+                    top_menu_title.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+                }
+                //schoolName
                 top_menu_title.setText(schoolName);
 
                 top_menu_rightTxt.setVisibility(View.GONE);
@@ -180,4 +190,6 @@ public class ACT_MainUI extends FragmentActivity implements View.OnClickListener
         }
 
     }
+
+
 }

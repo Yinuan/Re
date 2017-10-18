@@ -200,7 +200,7 @@ public class ACT_MeContactUs extends ACT_Network implements View.OnClickListener
 				popupWindow.dismiss();
 				//拨打电话
 				String tellPhone =us_tell.getText().toString();
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+"4000296826"));
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+tellPhone));
 				startActivity(intent);
 			}
 		});

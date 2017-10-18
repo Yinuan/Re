@@ -1,9 +1,11 @@
 package com.klcxkj.rs.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
@@ -17,6 +19,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -37,8 +41,10 @@ import com.klcxkj.rs.bean.BuildingAndRoomName;
 import com.klcxkj.rs.bean.UserInfo;
 import com.klcxkj.rs.bo.Ban;
 import com.klcxkj.rs.bo.BaseBo;
+import com.klcxkj.rs.bo.CardInfo;
 import com.klcxkj.rs.bo.Room;
 import com.klcxkj.rs.util.GlobalTools;
+import com.klcxkj.rs.util.IDCard;
 import com.klcxkj.rs.widget.LoadingDialogProgress;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.util.HashMap;
 
 /**
@@ -58,6 +65,8 @@ import java.util.HashMap;
  */
 public class ACT_CampusCardApply extends ACT_Network implements View.OnClickListener {
 	private String url = RSApplication.BASE_URL + "tStudent/studentAutoMakeCard?";
+	private String queryCardInfo = RSApplication.BASE_URL + "tStudent/studentGetCardInfo?";  //查询卡片信息
+
 	private LinearLayout layout_all;//布局parent
 	private EditText mEditName;//name
 	private RadioGroup sex;
@@ -170,7 +179,7 @@ public class ACT_CampusCardApply extends ACT_Network implements View.OnClickList
 	}
 
 private void submitDataToserver(){
-	progress = GlobalTools.getInstance().showDailog(ACT_CampusCardApply.this,"提交..");
+	progress = GlobalTools.getInstance().showDailog(ACT_CampusCardApply.this,"申卡中");
 	String pass = AppPreference.getInstance().getPassWord();
 	Log.d("ACT_CampusCardApply", "passssss:"+pass);
 	Log.d("ACT_CampusCardApply", "sexxxxx:"+sexNumber);
@@ -191,8 +200,20 @@ private void submitDataToserver(){
 
 	@Override
 	protected int parseJson(JSONObject result, String url) throws JSONException {
-		progress.dismiss();
+		CardInfo cardInfo =new  Gson().fromJson(result.toString(),CardInfo.class);
+		if (cardInfo.getCardID() !=0){
+			//更新卡片信息
+			AppPreference.getInstance().saveCardInfos(cardInfo);
+			if (cardInfo.getPrefillMoney() ==0){
+				showPop2();
+			}else {
+				Intent intent =new Intent(ACT_CampusCardApply.this,ACT_ApplyCard_Rechge.class);
+				intent.putExtra("perMonny",cardInfo.getPrefillMoney()+"");
+				startActivity(intent);
+				finish();
+			}
 
+		}
 		return 0;
 	}
 
@@ -203,7 +224,8 @@ private void submitDataToserver(){
 
 	@Override
 	protected void loadError(JSONObject result) {
-		progress.dismiss();
+		toast("获取卡片信息失败");
+		finish();
 	}
 
 	@Override
@@ -234,7 +256,9 @@ private void submitDataToserver(){
 			AppPreference.getInstance().saveLoginUser(userInfo);
 			Log.d("ACT_CampusCardApply", "applyCardIsSucess");
 			EventBus.getDefault().postSticky("applyCardIsSucess");
-			showPop2();
+			//showPop2();
+			//查询卡片信息
+			loadCardDatasforServer();
 
 		}else {
 			toast(baseBo.getMsg());
@@ -243,7 +267,18 @@ private void submitDataToserver(){
 
 	}
 
+	/**
+	 * 查询卡片信息
+	 */
 
+	private void loadCardDatasforServer() {
+		StringBuffer sb = new StringBuffer(queryCardInfo);
+		sb.append("PrjID=" + getNewUser().getPrjID());
+		sb.append("&EmployeeID=" + getNewUser().getEmployeeID());
+		sb.append("&ServerIP=" + getNewUser().getServerIP());
+		sb.append("&ServerPort=" + getNewUser().getServerPort());
+		sendGetRequest(sb.toString());
+	}
 
 
 	@Override
@@ -276,9 +311,22 @@ private void submitDataToserver(){
 					toast("请选择性别");
 					return;
 				}
-				if (TextUtils.isEmpty(mEditStudentNumber.getText())) {
-					toast("请输入身份证号码");
-					return;
+				if (!TextUtils.isEmpty(mEditStudentNumber.getText())) {
+					/*if (mEditStudentNumber.getText().toString().length()<15){
+						toast("身份证号码不少于15位");
+						return;
+					}*/
+					String idStr =mEditStudentNumber.getText().toString();
+					try {
+						String idRStr =IDCard.IDCardValidate(idStr);
+						if (idRStr !=null && idRStr.length()!=0){
+							toast(idRStr);
+							return;
+						}
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+
 				}
 				if (TextUtils.isEmpty(mBuildingID.getText().toString())) {
 					toast("请选择楼栋");
@@ -288,17 +336,104 @@ private void submitDataToserver(){
 					toast("请选择房间");
 					return;
 				}
-				if (mEditStudentNumber.getText().toString().length()<15){
-					toast("身份证号码不少于15位");
-					return;
-				}
-				submitDataToserver();
+
+				showpop2();
 				break;
 
 
 		}
 	}
+	/**
+	 * 选择其他金额
+	 */
+	private void showpop2() {
+		View view = LayoutInflater.from(ACT_CampusCardApply.this).inflate(R.layout.pop_style_4, null);
+		final AutoCompleteTextView value = (AutoCompleteTextView) view.findViewById(R.id.pop_4_value);
+		value.setHint("请输入登录密码");
+		Button btn_ok = (Button) view.findViewById(R.id.pop_4_confrim);
+		Button btn_cancle = (Button) view.findViewById(R.id.pop_4_cancle);
+		TextView title = (TextView) view.findViewById(R.id.pop_4_title);
+		title.setText("提示: 请输入登录密码");
+		final PopupWindow popupWindow = new PopupWindow(view, getWidth(),
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		ColorDrawable cd = new ColorDrawable(0x000000);
+		popupWindow.setBackgroundDrawable(cd);
+		WindowManager.LayoutParams lp=getWindow().getAttributes();
+		lp.alpha = 0.4f;
+		getWindow().setAttributes(lp);
+		//注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
+		// 设置允许在外点击消失
+		popupWindow.setOutsideTouchable(false);
+		popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		//点击外部消失
+		//  popupWindow.setOutsideTouchable(true);
+		//设置可以点击
+		popupWindow.setFocusable(true);
+		// 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+		popupWindow.setBackgroundDrawable(new BitmapDrawable());
+		// 软键盘不会挡着popupwindow
+		popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				final InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.toggleSoftInput(1000, InputMethodManager.HIDE_NOT_ALWAYS);
+			}
+		},50);
+		//popupWindow.showAsDropDown(mSubmit);
+		btn_cancle.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				popupWindow.dismiss();
+				//参数：1，自己的EditText。2，时间。
+			}
+		});
+		btn_ok.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				//验证密码
+				String password = value.getText().toString();
+				String pa =AppPreference.getInstance().getPassWord();
+				Log.d("ACT_CampusCardLoss","password:"+ pa);
+				if (!TextUtils.isEmpty(password) && password.equals(pa)) {
+					popupWindow.dismiss();
+					submitDataToserver();
 
+				} else {
+//							DialogUtil.dismissAlertDialog();
+//							PopupWindowUtil.showPopupWindow(ACT_CampusCardLoss.this, ACT_CampusCardLoss.this.findViewById(R.id.layout_navbar));
+					toast("密码错误，请重新输入");
+				}
+			}
+		});
+		// 监听菜单的关闭事件
+		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+			@Override
+			public void onDismiss() {
+			}
+		});
+		// 监听触屏事件
+		popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+			public boolean onTouch(View view, MotionEvent event) {
+				return false;
+			}
+		});
+		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+			//在dismiss中恢复透明度
+			public void onDismiss() {
+				WindowManager.LayoutParams lp = getWindow().getAttributes();
+				lp.alpha = 1f;
+				getWindow().setAttributes(lp);
+			}
+		});
+
+		//设置软件盘不挡
+		popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+		popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+	}
 
 	private void showPop() {
 		View view = LayoutInflater.from(ACT_CampusCardApply.this).inflate(R.layout.pop_style_2b, null);
@@ -439,6 +574,7 @@ private void submitDataToserver(){
 			}
 		});
 	}
+
 
 	/**
 	 * 获取屏幕宽度

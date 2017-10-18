@@ -11,8 +11,8 @@ android {
         applicationId "com.klcxkj.rs"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 6
-        versionName "4.01"
+        versionCode 7
+        versionName "6.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -71,13 +71,8 @@ dependencies {
     /*universalimageloader*/
     /*eventbus*/
     /*七妞云*/
-    
-
-
     //没有使用特殊Header，可以不加这行
-
-
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
+    //二维码
     compile 'com.android.support:design:25.3.1'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
@@ -87,5 +82,7 @@ dependencies {
     compile 'com.qiniu:happy-dns:0.2.13'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
     testCompile 'junit:junit:4.12'
+
 }

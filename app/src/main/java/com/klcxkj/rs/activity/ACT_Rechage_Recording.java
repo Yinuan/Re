@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.klcxkj.rs.R;
@@ -43,9 +43,9 @@ public class ACT_Rechage_Recording extends ACT_Network {
     private LRechargeRecrodingAdpater rAdpater;//充值适配器
     private Handler mHandler =new Handler();
     private int maxCount;
-    private ImageView data_null;//无数据
     private  SmartRefreshLayout refreshLayout;
     private LoadingDialogProgress progress;
+    private RelativeLayout layout_null;  //无数据视图
     private static final String RECHARGE_RECORDING = RSApplication.BASE_URL+"tStudent/getStuBillList?";//充值记录
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class ACT_Rechage_Recording extends ACT_Network {
                 refreshlayout.finishRefresh(2000);
                 mDatas.clear();
                 listDatas.clear();
-                refreshLayout.setEnableLoadmore(true);
+
                 initdata();
             }
         });
@@ -76,13 +76,10 @@ public class ACT_Rechage_Recording extends ACT_Network {
                     @Override
                     public void run() {
                         if (mDatas.size()-listDatas.size()<=20 ){//20-40
-                            if (mDatas.size()==listDatas.size()){
-                                //不在上拉
-                                refreshLayout.setEnableLoadmore(false);
-                            }else {
-                                for (int i = maxCount; i <mDatas.size() ; i++) {
-                                    listDatas.add(mDatas.get(i));
-                                }
+                            //不在上拉
+                            refreshLayout.setEnableLoadmore(false);
+                            for (int i = maxCount; i <mDatas.size() ; i++) {
+                                listDatas.add(mDatas.get(i));
                             }
 
                         }else { //40
@@ -93,7 +90,7 @@ public class ACT_Rechage_Recording extends ACT_Network {
                         }
                         rAdpater.notifyDataSetChanged();
                     }
-                },1800);
+                },1850);
 
 
             }
@@ -107,9 +104,10 @@ public class ACT_Rechage_Recording extends ACT_Network {
         rAdpater =new LRechargeRecrodingAdpater(this);
         rAdpater.setList(listDatas);
         listView = (ListView) findViewById(R.id.listView_rechage_recording);
-        data_null = (ImageView) findViewById(R.id.recroding_data_null);
+        layout_null = (RelativeLayout)findViewById(R.id.data_null);
         listView.setAdapter(rAdpater);
         refreshLayout = (SmartRefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout.setEnableLoadmore(false);
 
     }
     //初始化数据
@@ -144,22 +142,24 @@ public class ACT_Rechage_Recording extends ACT_Network {
     @Override
     protected void loadDatas() {
       progress.dismiss();
-        if (recrodingResult.getObj()!=null) {
+        if (recrodingResult.getObj()!=null && recrodingResult.getObj().size()>0) {
             mDatas.addAll(recrodingResult.getObj());
            if (mDatas.size()>20){
                for (int i = 0; i <20 ; i++) {
                    listDatas.add(mDatas.get(i));
                }
+               //大于20条数据的时候，开放下拉刷新
+               refreshLayout.setEnableLoadmore(true);
            }else {
                listDatas.addAll(mDatas);
            }
-            data_null.setVisibility(View.GONE);
-            refreshLayout.setVisibility(View.VISIBLE);
+           rAdpater.setList(listDatas);
+            rAdpater.notifyDataSetChanged();
         }else {
-            data_null.setVisibility(View.VISIBLE);
             refreshLayout.setVisibility(View.GONE);
+            layout_null.setVisibility(View.VISIBLE);
         }
-        rAdpater.notifyDataSetChanged();
+
     }
 
     @Override

@@ -44,7 +44,7 @@
         >
         <Button
             android:id="@+id/pop_4_cancle"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/code_get"
             android:text="取消"
             android:layout_marginLeft="10dp"
@@ -55,7 +55,7 @@
             android:layout_height="45dp" />
         <Button
             android:id="@+id/pop_4_confrim"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/btn_text"
             android:text="确定"
             android:layout_marginLeft="5dp"

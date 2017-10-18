@@ -334,7 +334,7 @@ public class ACT_ForgetPassword extends ACT_Network{
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		int widthPixels = metrics.widthPixels;
-		int width =(widthPixels*3)/4;
+		int width =(widthPixels*3)/5;
 		return  width;
 	}
 	private void showPop(String str) {
